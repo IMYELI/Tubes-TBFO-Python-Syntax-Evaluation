@@ -1,0 +1,10 @@
+Terminals:
+= * / - %
+Variables:
+S ACTION VAR VALUE OPS
+Productions:
+S -> ACTION S;
+ACTION -> VAR = VALUE;
+VAR -> variable;
+OPS -> * | / | + | - | / / | * * | %;
+VALUE -> NUM OPS NUM | NUM | STRING

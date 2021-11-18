@@ -1,16 +1,26 @@
-WRAPPER -> IF WRAPPER | ACTION WRAPPER
-ACTION -> VAR = VAL COMMENT | IF COMMENT | COMMENT VAR = VAL
-GENERAL -> VAR | NUM | FUNCT | PART , PART | PART OPS PART
-DEFINE -> def FUNCT : ACTION | def FUNCT : ACTION return GENERAL
-FUNCT -> VAR ( GENERAL )
-VAR -> var
-VAL -> num | GENERAL OPS GENERAL | ( GENERAL ) | 
-EXPR -> ( BOOL ) :
-IF -> if EXPR | if EXPR ELSE  | if EXPR ELIF | if BREAK | if PASS | if CONTINUE | if RAISE
-ELIF -> elif EXPR | ELIF ELSE | ELIF ELIF
-ELSE -> else : ACTION
-BOOL -> True | False | PART LOGICAL PART | PART and PART | PART or PART | PART is PART | not PART
-LOGICAL -> = = | ! = | > | < | > = | < =
-OPS -> + | - | / | * | ** | / /
-COMMENT -> # RANDOM | " " " RANDOM " " " | ' ' ' RANDOM ' ' '
-RANDOM -> 
+Terminals:
++ - * / // % = < > ! " ' # ( ) : , rand var num true false and or is not def return for in range if elif else break pass continue
+Variables:
+WRAPPER IF ACTION VAR VAL COMMENT GENERAL DEFINE FUNCT EXPR ELIF ELSE BREAK PASS CONTINUE FOR RANGE BOOL LOGICAL OPS COMMENT RANDOM
+Productions:
+WRAPPER -> IF WRAPPER | ACTION WRAPPER;
+ACTION -> VAR = VAL | IF | VAR = VAL | ACTION COMMENT | COMMENT ACTION | VAR = VAL OPS VAL | FUNCT;
+GENERAL -> VAR | NUM | FUNCT | PART , PART | PART OPS PART;
+DEFINE -> def FUNCT : ACTION | def FUNCT : ACTION return GENERAL;
+FUNCT -> VAR ( GENERAL );
+VAR -> var;
+VAL -> num | GENERAL OPS GENERAL | ( GENERAL ) | VAR;
+EXPR -> ( BOOL ) :;
+IF -> if EXPR | if EXPR ELSE  | if EXPR ELIF | if BREAK | if PASS | if CONTINUE | if RAISE;
+ELIF -> elif EXPR | ELIF ELSE | ELIF ELIF;
+ELSE -> else : ACTION;
+BREAK -> break;
+PASS -> pass;
+CONTINUE -> continue;
+FOR -> for VAR in range RANGE ;
+RANGE ->  ( VAL , VAL , VAL ) : | ( VAL , VAL , VAL) : | ( VAL , VAL , VAL);
+BOOL -> true | false | PART LOGICAL PART | PART and PART | PART or PART | PART is PART | not PART;
+LOGICAL -> = = | ! = | > | < | > = | < =;
+OPS -> + | - | / | * | * * | / / | %;
+COMMENT -> # RANDOM | " " " RANDOM " " " | ' ' ' RANDOM ' ' ';
+RANDOM -> rand
