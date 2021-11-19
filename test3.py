@@ -1,0 +1,15 @@
+import cfgConv as cf
+
+cf.readCFG("test.txt")
+cf.STARTSTATE()
+cf.uselessRemovalSTATE()
+#cf.isEpsilonProduced()
+cf.eliminateTerminal()
+cf.assignNewdict()
+cf.subMoreThan2()
+cf.assignNewdict()
+file = cf.retCNF()
+file2 = cf.retEPS()
+print(file)
+print(file2)
+cf.writeToFile()

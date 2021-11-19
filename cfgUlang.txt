@@ -6,5 +6,5 @@ Productions:
 S -> ACTION S;
 ACTION -> VAR = VALUE;
 VAR -> variable;
-OPS -> * | / | + | - | / / | * * | %;
+OPS -> * | / | + | - | %;
 VALUE -> NUM OPS NUM | NUM | STRING

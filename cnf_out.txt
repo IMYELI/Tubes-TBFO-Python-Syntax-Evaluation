@@ -1,0 +1,4 @@
+S0 ->  a | a  A | A  a | b | a 
+A ->  FX0  B 
+B ->  A  a | b | a 
+FX0 ->  a  B 
