@@ -10,6 +10,8 @@ EPS = []
 VAR = 'FX'
 global count
 count = 0
+global panggil
+panggil = False
 
 def readCFG(filename):
     with open(filename) as file:
@@ -43,14 +45,16 @@ def retEPS():
     return EPS
 
 def STARTSTATE():           #MENAMBAH START STATE DI AWAL
+    global panggil
     if(isCalledinRHS(LHS[0])):
         cnf["S0"] = [[LHS[0]]]
         LHS.insert(0,"S0")
         RHS.insert(0,[[LHS[1]]])
+        panggil = True
     else:
         LHS[0] = "S0"
         assignNewdict()
-        cnf.update(cfg)
+    cnf.update(cfg)
 
 def uselessRemovalSTATE():
     bal = 0  #AGAR INDEX TETAP VALID SETELAH PENGHAPUSAN SUATU ELEMEN
@@ -66,11 +70,25 @@ def uselessRemovalSTATE():
     for i in range(len(LHS)):
         right = cnf[LHS[i]]
         for j in right:
-            if(len(j) == 1 and j[0] in LHS):
-                tmp = cnf[j[0]]
-                right.remove(j)
-                for k in tmp:
-                    right.append(k)
+            global panggil
+            if(not panggil):
+                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS):
+                    tmp = cnf[j[0]]
+                    right.remove(j)
+                    for k in tmp:
+                        right.append(k)
+            else:
+                if(len(j) == 1 and j[0] != LHS[1] and j[0] in LHS):
+                    tmp = cnf[j[0]]
+                    right.remove(j)
+                    for k in tmp:
+                        right.append(k)
+    for i in range(len(LHS)):
+        if(isCallingItself(LHS[i])):
+            RHS[i].remove([LHS[i]])
+    RHS[0] = RHS[1]
+    assignNewdict()
+    
 
 
 def eliminateTerminal():
@@ -81,8 +99,8 @@ def eliminateTerminal():
             if(isContainLHS(j) and isContainRHS(j)): #MENGECEK JIKA ADA TERMINAL DAN VARIABEL YANG BERDAMPINGAN
                 for k in j:
                     if(k not in LHS):                   
-                        tmp = containSingleTerminal(k)  #MENGECEK JIKA ADA VARIABEL YANG SUDAH MEREPRESENTASIKAN SUATU TERMINAL
-                        if(tmp == ''):
+                        singleVar = containSingleTerminal(k)
+                        if(singleVar == ''):
                             new = VAR + str(count)
                             cnf[new] = [[k]]
                             k = new
@@ -90,10 +108,24 @@ def eliminateTerminal():
                             RHS.append(cnf[new])
                             updateRHS(LHS[i],j,cnf[new][0][0],new)
                             count += 1
-                        elif(tmp == LHS[0]):   #JIKA VARIABEL ADA, MAKA KITA TINGGAL MENGGANTI RHS YANG MEMILIKI SIMBOL TERMINAL TERSEBUT 
-                            pass
                         else:
-                            updateRHS(LHS[i],j,k,tmp)
+                            updateRHS(LHS[i],j,k,singleVar)
+            if(not isContainLHS(j) and len(j)>1):
+                for k in j:
+                    if(k not in LHS):                   
+                        singleVar = containSingleTerminal(k)
+                        if(singleVar == ''):
+                            new = VAR + str(count)
+                            cnf[new] = [[k]]
+                            k = new
+                            LHS.append(new)
+                            RHS.append(cnf[new])
+                            updateRHS(LHS[i],j,cnf[new][0][0],new)
+                            count += 1
+                        else:
+                            updateRHS(LHS[i],j,k,singleVar)
+    assignNewdict()
+    
 
                     
 def subMoreThan2():
@@ -102,8 +134,8 @@ def subMoreThan2():
     for i in cnf:
         right = cnf[i]
         for j in range(len(right)):
-            if(len(right[j])>2):
-                for k in range(len(right[j])//2):
+            if(len(right[j])>2):                    #KALO ADA YANG LEBIH DARI 2 VAR BUAT SATU RULE BAKAL DISUBSTITUSI
+                for k in range(len(right[j])//2):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
                     RHS.append([[right[j][k]]])
                     panj = len(RHS)
                     RHS[panj-1][0].append(right[j][k+1])
@@ -113,8 +145,10 @@ def subMoreThan2():
                     right[j].insert(k,newVar)
                     LHS.append(newVar)
                     RHS[idx][j] = right[j]
+                    count += 1
         idx+=1
-                
+    assignNewdict()
+  
             
 
 '''
@@ -144,7 +178,14 @@ def isEpsilonProduced():        #MENCARI NON TERMINAL YANG MENGHASILKAN EPSILON
     return
 '''
 
-#
+def isCallingItself(left):
+    right = cnf[left]
+    for i in right:
+        if(len(i) == 1 and i[0] == left):
+            return True
+    else:
+        return False
+
 def isCalledinRHS(left):
     for i in RHS:
         for j in i:
@@ -207,7 +248,7 @@ def containSingleTerminal(X):
     for i in cnf:
         right = cnf[i]
         for j in right:
-            if(len(j)==1 and j[0] == X):
+            if(len(j)==1 and j[0] == X and len(right) == 1):
                 return i
     return ''
 
@@ -229,3 +270,15 @@ def writeToFile():
     f = open("cnf_out.txt","w")
     f.write(write)
     f.close()
+
+def printCNF():
+    write = ''
+    for i in range(len(LHS)):
+        write += LHS[i] + ' -> '
+        for j in range(len(RHS[i])):
+            for k in range(len(RHS[i][j])):
+                write += ' '+ RHS[i][j][k] + ' '
+            if(j != len(RHS[i])-1):
+                write += "|"
+        write += "\n"
+    print(write)

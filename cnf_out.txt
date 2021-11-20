@@ -1,4 +1,9 @@
-S0 ->  a | a  A | A  a | b | a 
-A ->  FX0  B 
-B ->  A  a | b | a 
-FX0 ->  a  B 
+S0 ->  A  S | FX2  B | S  B 
+S ->  A  S | FX2  B | S  B 
+A ->  FX3  S | FX0  S | a 
+B ->  FX4  S | FX1  FX1 | FX3  S | FX0  S | a 
+FX0 ->  a 
+FX1 ->  b 
+FX2 ->  A  S 
+FX3 ->  FX0  A 
+FX4 ->  S  FX1 
