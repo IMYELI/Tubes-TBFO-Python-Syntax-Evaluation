@@ -20,7 +20,7 @@ RETURN_TYPE -> return V
 PARAM -> PARAM , PARAM | VAR
 
 METHOD -> VAR . METHOD_CONT
-METHOD_CONT -> METHOD_CONT . METHOD_CONT | FUNCTION 
+METHOD_CONT -> VAR . METHOD_CONT | FUNCTION 
 FUNCTION -> VAR BRACKETS
 
 WITH -> with WITH_TYPE as VAR :
@@ -31,6 +31,12 @@ MULT_MODULE -> MULT_MODULE , MULT_MODULE | IMPORT_CONT as VAR
 MODULE -> * | VAR | IMP_MULT | MODULE , MODULE
 IMPORT_CONT ->  IMPORT_CONT . IMPORT_CONT | VAR
 
+DICT -> { DICT_CONT } | { }
+DICT_CONT -> DICT_CONT , DICT_CONT | DICT_TYPE 
+DICT_TYPE -> DICT_KEY : DICT_VAL
+DICT_KEY -> STRING | num
+DICT_VAL -> VAL
+
 RAISE -> raise FUNCTION
 PRINT -> print ( V )
 BRACKETS -> ( V ) | ( )
@@ -38,10 +44,10 @@ COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
 VAR -> variable
 V -> VAL | VAR | V OPS V | V / / V | V * * V | V , V
 COMPARE -> = = | ! = | < | > | < = | > =
-VAL -> STRING | num |  BOOL | TUPLE | none | LIST
+VAL -> STRING | num |  BOOL | TUPLE | none | LIST | DICT | FUNCTION | METHOD
 TUPLE -> ( V )
 LIST -> [ V ]
 OPS -> + | - | * | / | %
-STRING -> ' string ' | " string " | STRING + STRING | STRING * pos_num
+STRING -> ' string ' | " string " | STRING + STRING
 BOOL -> True | False | V is V | BOOL and BOOL | BOOL or BOOL | not BOOL | V COMPARE V
 PASS -> pass
