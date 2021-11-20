@@ -1,6 +1,6 @@
 S -> ACTION
 ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | DEF | LOOP | RAISE | COMMENT | 
-PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT
+PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS
 
 IF_CONDITION -> if BRACKETS : | if BRACKETS : ELIF_CONDITION
 ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else :
@@ -11,7 +11,8 @@ FOR_LOOP -> for VAR in ITERABLE :
 ITERABLE -> LIST | TUPLE | range FOR_RANGE
 FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
 
-CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
+CLASS -> class VAR ( PARAM ) : CLASS_ACTION | class VAR ( ) : CLASS_ACTION
+CLASS_ACTION -> S
 
 DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
 DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
@@ -43,3 +44,4 @@ LIST -> [ V ]
 OPS -> + | - | * | / | %
 STRING -> ' string ' | " string " | STRING + STRING | STRING * pos_num
 BOOL -> True | False | V is V | BOOL and BOOL | BOOL or BOOL | not BOOL | V COMPARE V
+PASS -> pass
