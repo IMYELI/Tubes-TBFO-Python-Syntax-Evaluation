@@ -1,0 +1,31 @@
+S -> ACTION
+ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | DEF | RETURN | WHILE | RAISE | COMMENT | PRINT
+
+DEF -> DEF_HEAD ACTION RETURN | DEF_HEAD
+DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
+PARAM -> PARAM , PARAM | VAR
+RETURN -> return V
+
+IF -> IF_HEADER :
+IF_HEADER -> if BRACKETS
+
+ITERATE -> WHILE | FOR | 
+
+FOR -> for VAR in range RANGE
+RANGE ->  ( VAL , VAL , VAL ) : | ( VAL , VAL , VAL) : | ( VAL , VAL , VAL)
+
+WHILE -> WHILE_HEADER :
+WHILE -> while BRACKETS
+RAISE -> raise BRACKETS
+
+PRINT -> print ( V )
+
+BRACKETS -> ( V ) | ( )
+COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
+VAR -> variable
+V -> VAL | VAR | V OPS V | V / / V | V * * V | V , V
+COMPARE -> = = | ! = | < | > | < = | > =
+VAL -> STRING | num |  BOOL | ( V ) | none
+OPS -> + | - | * | / | %
+STRING -> ' string ' | " string " | STRING + STRING | STRING * pos_num
+BOOL -> True | False | V is V | BOOL and BOOL | BOOL or BOOL | not BOOL | V COMPARE V
