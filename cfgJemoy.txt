@@ -31,7 +31,7 @@ MULT_MODULE -> MULT_MODULE , MULT_MODULE | IMPORT_CONT as VAR
 MODULE -> * | VAR | IMP_MULT | MODULE , MODULE
 IMPORT_CONT ->  IMPORT_CONT . IMPORT_CONT | VAR
 
-RAISE -> raise BRACKETS
+RAISE -> raise FUNCTION
 PRINT -> print ( V )
 BRACKETS -> ( V ) | ( )
 COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
