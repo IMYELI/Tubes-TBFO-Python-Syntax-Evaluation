@@ -1,7 +1,7 @@
 S -> ACTION
 ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | DEF | LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION
-
 RETURN_TYPE -> return V
+
 IF_CONDITION -> if BRACKETS : | if BRACKETS : ELIF_CONDITION
 ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else :
 
@@ -11,12 +11,18 @@ FOR_LOOP -> for VAR in ITERABLE :
 ITERABLE -> LIST | TUPLE | range FOR_RANGE
 FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
 
-CLASS -> CLASS_HEADER
-CLASS -> class VAR ( PARAM ) : | def VAR ( ) :
+CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
 
 DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
 DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
 PARAM -> PARAM , PARAM | VAR
+
+METHOD -> VAR . BRACKETS
+FUNCTION -> VAR BRACKETS
+
+WITH -> WITH_HEADER
+WITH_TYPE -> METHOD | FUNCTION
+WITH_HEADER -> with WITH_TYPE as VAR :
 
 RAISE -> raise BRACKETS
 PRINT -> print ( V )
