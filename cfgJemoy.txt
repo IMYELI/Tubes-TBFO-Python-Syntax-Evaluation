@@ -1,0 +1,45 @@
+S -> ACTION
+ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | DEF | LOOP | RAISE | COMMENT | 
+PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT
+
+IF_CONDITION -> if BRACKETS : | if BRACKETS : ELIF_CONDITION
+ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else :
+
+LOOP -> WHILE_LOOP | FOR_LOOP
+WHILE_LOOP -> while BRACKETS :
+FOR_LOOP -> for VAR in ITERABLE :
+ITERABLE -> LIST | TUPLE | range FOR_RANGE
+FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
+
+CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
+
+DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
+DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
+RETURN_TYPE -> return V
+PARAM -> PARAM , PARAM | VAR
+
+METHOD -> VAR . METHOD_CONT
+METHOD_CONT -> METHOD_CONT . METHOD_CONT | FUNCTION 
+FUNCTION -> VAR BRACKETS
+
+WITH -> with WITH_TYPE as VAR :
+WITH_TYPE -> METHOD | FUNCTION
+
+IMPORT -> from IMPORT_CONT import MODULE | import MODULE | import MULT_MODULE
+MULT_MODULE -> MULT_MODULE , MULT_MODULE | IMPORT_CONT as VAR 
+MODULE -> * | VAR | IMP_MULT | MODULE , MODULE
+IMPORT_CONT ->  IMPORT_CONT . IMPORT_CONT | VAR
+
+RAISE -> raise BRACKETS
+PRINT -> print ( V )
+BRACKETS -> ( V ) | ( )
+COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
+VAR -> variable
+V -> VAL | VAR | V OPS V | V / / V | V * * V | V , V
+COMPARE -> = = | ! = | < | > | < = | > =
+VAL -> STRING | num |  BOOL | TUPLE | none | LIST
+TUPLE -> ( V )
+LIST -> [ V ]
+OPS -> + | - | * | / | %
+STRING -> ' string ' | " string " | STRING + STRING | STRING * pos_num
+BOOL -> True | False | V is V | BOOL and BOOL | BOOL or BOOL | not BOOL | V COMPARE V
