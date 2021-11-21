@@ -39,11 +39,11 @@ PRINT -> print ( V )
 BRACKETS -> ( V ) | ( )
 COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
 VAR -> variable
-V -> VAL | VAR | V OPS V | V / / V | V * * V | V , V
-COMPARE -> = = | ! = | < | > | < = | > =
+V -> VAL | VAR | V OPS V | V , V
+COMPARE -> eq | neq | < | > | le | ge
 VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD
 LIST -> [ V ]
-OPS -> + | - | * | / | %
+OPS -> + | - | * | / | % | pow | div
 STRING -> ' string ' | " string " | STRING + STRING
 BOOL -> True | False | V is V | V COMPARE V | V and V | V or V | not V 
 PASS -> pass
