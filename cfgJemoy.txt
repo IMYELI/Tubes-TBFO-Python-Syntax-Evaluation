@@ -11,7 +11,7 @@ FOR_LOOP -> for VAR in ITERABLE :
 ITERABLE -> LIST | TUPLE | range FOR_RANGE
 FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
 
-CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
+CLASS -> class VAR ( PARAM ) : | class VAR ( ) : | class Var :
 
 DEF -> DEF_HEAD DEF_ACTION | DEF_HEAD
 DEF_ACTION -> DEF_ACTION DEF_ACTION | ACTION | RETURN
