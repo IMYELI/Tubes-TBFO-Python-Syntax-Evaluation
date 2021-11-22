@@ -13,9 +13,10 @@ FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
 
 CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
 
-DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
+DEF -> DEF_HEAD DEF_ACTION | DEF_HEAD
+DEF_ACTION -> DEF_ACTION DEF_ACTION | ACTION | RETURN
 DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
-RETURN_TYPE -> return V
+RETURN -> return V
 PARAM -> PARAM , PARAM | variable_param
 
 METHOD -> VAR . METHOD | FUNCTION 
