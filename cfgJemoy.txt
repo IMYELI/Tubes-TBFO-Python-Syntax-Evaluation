@@ -16,7 +16,7 @@ CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
 DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
 DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
 RETURN_TYPE -> return V
-PARAM -> PARAM , PARAM | VAR
+PARAM -> PARAM , PARAM | variable_param
 
 METHOD -> VAR . METHOD | FUNCTION 
 FUNCTION -> VAR BRACKETS
@@ -39,7 +39,9 @@ PRINT -> print ( V )
 BRACKETS -> ( V ) | ( )
 COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
 VAR -> variable
-V -> VAL | VAR | V OPS V | V , V
+
+V -> VAL | VAR | V OPS V
+
 COMPARE -> eq | neq | < | > | le | ge
 VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD
 LIST -> [ V ]
