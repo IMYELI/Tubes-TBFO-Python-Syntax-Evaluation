@@ -16,7 +16,7 @@ CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
 DEF -> DEF_HEAD ACTION RETURN_TYPE | DEF_HEAD
 DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
 RETURN_TYPE -> return V
-PARAM -> PARAM , PARAM | variable_param
+PARAM -> PARAM , PARAM | variable
 
 METHOD -> VAR . METHOD | FUNCTION 
 FUNCTION -> VAR BRACKETS

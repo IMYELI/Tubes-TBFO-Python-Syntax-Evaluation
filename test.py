@@ -1,8 +1,3 @@
-global chongsky
-chongsky = []
-
-def tes():
-    chongsky.append('tis')
-
-def perint():
-    print(chongsky)
+A = b + c
+while(a>=b):
+    print(A)

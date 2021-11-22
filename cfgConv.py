@@ -72,7 +72,7 @@ def uselessRemovalSTATE():
         for j in right:
             global panggil
             if(not panggil):
-                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS):
+                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS and right != cnf[LHS[0]]):
                     tmp = cnf[j[0]]
                     right.remove(j)
                     for k in tmp:
@@ -88,6 +88,7 @@ def uselessRemovalSTATE():
             RHS[i].remove([LHS[i]])
     RHS[0] = RHS[1]
     assignNewdict()
+    
     
 
 

@@ -1,4 +1,2 @@
-j = [['a']]
-k = ['b']
-j.append(k)
-print(j)
+if ( a == b ):
+    a = a*zz
