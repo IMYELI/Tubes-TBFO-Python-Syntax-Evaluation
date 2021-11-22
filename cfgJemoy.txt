@@ -1,0 +1,52 @@
+S -> ACTION
+ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | VAR % = V | DEF | LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS | INPUT
+LOOP_ACTION -> LOOP_ACTION LOOP_ACTION | ACTION | break | continue
+
+IF_CONDITION -> if BRACKETS : | if BRACKETS : ELIF_CONDITION
+ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else :
+
+LOOP -> WHILE_LOOP LOOP_ACTION | FOR_LOOP LOOP_ACTION
+WHILE_LOOP -> while BRACKETS :
+FOR_LOOP -> for VAR in ITERABLE :
+ITERABLE -> LIST | TUPLE | range FOR_RANGE
+FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
+
+CLASS -> class VAR ( PARAM ) : | class VAR ( ) :
+
+DEF -> DEF_HEAD DEF_ACTION | DEF_HEAD
+DEF_ACTION -> DEF_ACTION DEF_ACTION | ACTION | RETURN
+DEF_HEAD -> def VAR ( PARAM ) : | def VAR ( ) :
+RETURN -> return V
+PARAM -> PARAM , PARAM | VAR
+
+METHOD -> VAR . METHOD | FUNCTION 
+FUNCTION -> VAR BRACKETS
+
+WITH -> with WITH_TYPE as VAR :
+WITH_TYPE -> METHOD | FUNCTION
+
+IMPORT -> from IMPORT_CONT import MODULE | import MODULE | import MULT_MODULE
+MULT_MODULE -> MULT_MODULE , MULT_MODULE | IMPORT_CONT as VAR 
+MODULE -> * | VAR | MULT_MODULE | MODULE , MODULE
+IMPORT_CONT ->  IMPORT_CONT . IMPORT_CONT | VAR
+
+DICT -> { DICT_CONT } | { }
+DICT_CONT -> DICT_CONT , DICT_CONT | DICT_TYPE 
+DICT_TYPE -> DICT_KEY : VAL
+DICT_KEY -> STRING | num
+
+RAISE -> raise FUNCTION
+PRINT -> print ( V )
+BRACKETS -> ( V ) | ( )
+COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
+VAR -> variable
+
+V -> VAL | VAR | V OPS V
+
+COMPARE -> eq | neq | < | > | le | ge
+VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD
+LIST -> [ V ]
+OPS -> + | - | * | / | % | pow | div
+STRING -> ' string ' | " string " | STRING + STRING
+BOOL -> True | False | V is V | V COMPARE V | V and V | V or V | not V 
+PASS -> pass
