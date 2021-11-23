@@ -102,7 +102,7 @@ def cyk(token):
 
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    with open('test2.py') as file:
+    with open('tubay3.py') as file:
         kebenaran = True
         line = file.readline()
         while(line != ''):

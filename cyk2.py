@@ -3,7 +3,7 @@ from pythonToToken import tokenizeInput
 CNF={}
 LHS = []
 RHS = []
-HEAD = ['for','while','if','def']
+HEAD = ['for','while','if','def','class']
 
 def readCNF(filename):
     with open(filename) as file:
@@ -84,7 +84,7 @@ def cyk(token):
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
         #        print('\n',tmp4,i,j,'\n\n')
-         #       printCNF(arr)
+        #        printCNF(arr)
         #print(arr)
         level += 1
     if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and len(arr[panjang-1][0][0]) >= 1 )):
@@ -114,7 +114,7 @@ if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
     tokenList = []
     lines = []
-    with open('test.py') as file:
+    with open('tubay3.py') as file:
         kebenaran = True
         line = file.readline()
         while(line != ''):
@@ -156,16 +156,23 @@ if(__name__ == "__main__"):
         if(bool_head and i==len(tokenList)):
             bool_false = True
                 
-        if(bool_head and i<len(tokenList)):
+        while(bool_head and i<len(tokenList) and not bool_false):
             tmp[len(tmp)-1] += tokenList[i]
+            bool_head = False
             for j in tokenList[i]:
                 if(j == ')'):
                     bool_open_pr = False
                 elif(j == '}'):
                     bool_open_pr = False
-                if(j in HEAD or j != 'elif'):
+                elif(j == "if"):
+                    bool_if = True
+                if(j in HEAD or j == "elif"):
+                    bool_head = True
+                if(not bool_if and j == 'elif'):
                     bool_false = True
             i += 1
+            
+        
         while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList)):
             tmp[len(tmp)-1] += tokenList[i]
             for j in tokenList[i]:
@@ -176,6 +183,8 @@ if(__name__ == "__main__"):
                 if(j in HEAD and j != 'if'):
                     bool_if = False
             i += 1
+        
+        #print(tmp[0])
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
         if(kebenaran and len(tmp[0]) >0 and not bool_false):
