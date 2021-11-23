@@ -100,6 +100,16 @@ def cyk(token):
                             return True
     '''
 
+def findElif(i,end,tokenList):
+    for k in tokenList[i:end]:
+        for l in k:
+            if(l == "elif"):
+                return True
+            elif(l in HEAD and l != 'if'):
+                return False
+    return False
+
+
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
     tokenList = []
@@ -116,35 +126,68 @@ if(__name__ == "__main__"):
             tmp.append(line)
             line = file.readline()
     i = 0
+    sign = 0
     bool_open_pr = False
+    bool_open_dc = False
+    bool_if = False
+    bool_false = False
+    bool_head = False
     while(i<len(tokenList)):
         tmp = []
         tmp.append(tokenList[i])
-        print(tokenList[i])
-        i += 1
         for j in tokenList[i]:
             if j == '(':
                 bool_open_pr = True
-            if(j == ')'):
+            elif(j == ')'):
                 bool_open_pr = False
-        while(bool_open_pr and i<len(tokenList)):
+            elif j == '{':
+                bool_open_dc = True
+            elif(j == '}'):
+                bool_open_dc = False
+            elif(j == "if"):
+                bool_if = True
+            if(j in HEAD and j != 'if'):
+                bool_if = False
+            if(not bool_if and j == 'elif'):
+                bool_false = True
+            if(j in HEAD or j == "elif"):
+                bool_head = True
+        i += 1
+        if(bool_head and i==len(tokenList)):
+            bool_false = True
+                
+        if(bool_head and i<len(tokenList)):
             tmp[len(tmp)-1] += tokenList[i]
             for j in tokenList[i]:
                 if(j == ')'):
-                    bool_open_pr = True
+                    bool_open_pr = False
+                elif(j == '}'):
+                    bool_open_pr = False
+                if(j in HEAD or j != 'elif'):
+                    bool_false = False
             i += 1
-
-
-    if(line != ''):
-        kebenaran = cyk(token)
-    if(kebenaran and line != ''):
-        for i in tmp:
-            print(i)
-    else:
-        if(line != ''):
-            for i in tmp:
-                print(i,end='   <-- Ada yang salah')
-                print()
+        while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList)):
+            tmp[len(tmp)-1] += tokenList[i]
+            for j in tokenList[i]:
+                if(j == ')'):
+                    bool_open_pr = False
+                elif(j == '}'):
+                    bool_open_pr = False
+                if(j in HEAD and j != 'if'):
+                    bool_if = False
+            i += 1
+        print(tmp[0])
+        if(len(tmp[0]) > 0 and not bool_false ):
+            kebenaran = cyk(tmp[0])
+        if(kebenaran and len(tmp[0]) >0 and not bool_false):
+            for m in lines[sign:i]:
+                print(m)
+        else:
+            if(len(tmp[0]) >0):
+                for m in lines[sign:i]:
+                    print(m,end='   <-- Ada yang salah')
+                    print()
+        sign = i
 #    file = tokenizeInput('test2.py')
  #   print(file)
   #  if(cyk(file)):
