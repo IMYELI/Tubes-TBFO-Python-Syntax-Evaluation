@@ -164,7 +164,7 @@ if(__name__ == "__main__"):
                 elif(j == '}'):
                     bool_open_pr = False
                 if(j in HEAD or j != 'elif'):
-                    bool_false = False
+                    bool_false = True
             i += 1
         while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList)):
             tmp[len(tmp)-1] += tokenList[i]
