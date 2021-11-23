@@ -3,6 +3,7 @@ from pythonToToken import tokenizeInput
 CNF={}
 LHS = []
 RHS = []
+HEAD = ['for','while','if']
 
 def readCNF(filename):
     with open(filename) as file:
@@ -86,13 +87,8 @@ def cyk(token):
                 #printCNF(arr)
         #print(arr)
         level += 1
-    if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and arr[panjang-1][0][0][0] == 'S0' )):
+    if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and len(arr[panjang-1][0][0]) >= 1 )):
         return True
-    elif(arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0):
-        for i in arr[panjang-1][0]:
-            for j in i:
-                if [j] in RHS[0]:
-                    return True
     return False
     '''
     for i in arr:
@@ -106,12 +102,34 @@ def cyk(token):
 
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    file = tokenizeInput('H02_16520192_01.py')
-    print(file)
-    if(cyk(file)):
-        print("Syntax valid!")
-    else:
-        print("Syntax tidak valid!")
-        for i in file:
-            if(i == 'variableError'):
-                print("Terdapat kesalahan dalam penamaan variable")
+    with open('test2.py') as file:
+        line = file.readline()
+        while(line != ''):
+            tmp = []
+            line = line.replace("\n",'')
+            tmp.append(line)
+            token = tokenizeInput(line)
+            if(token[0] in HEAD):
+                line = file.readline()
+                line = line.replace("\n",'')
+                tmp.append(line)
+                token += tokenizeInput(line)
+            kebenaran = cyk(token)
+            if(kebenaran):
+                for i in tmp:
+                    print(i)
+            else:
+                for i in tmp:
+                    print(i,end='   <-- Ada yang salah')
+                    print()
+            line = file.readline()
+
+#    file = tokenizeInput('test2.py')
+ #   print(file)
+  #  if(cyk(file)):
+   #     print("Syntax valid!")
+    #else:
+     #   print("Syntax tidak valid!")
+      #  for i in file:
+       #     if(i == 'variableError'):
+        #        print("Terdapat kesalahan dalam penamaan variable")
