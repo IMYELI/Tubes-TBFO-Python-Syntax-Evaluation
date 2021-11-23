@@ -176,7 +176,6 @@ if(__name__ == "__main__"):
                 if(j in HEAD and j != 'if'):
                     bool_if = False
             i += 1
-        print(tmp[0])
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
         if(kebenaran and len(tmp[0]) >0 and not bool_false):
