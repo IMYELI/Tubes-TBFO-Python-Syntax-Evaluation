@@ -1,16 +1,16 @@
 S -> ACTION
-ACTION -> ACTION ACTION | VAR = V | VAR = TUPLE | VAR + = V | VAR - = V | VAR * = V | VAR / = V | VAR % = V | DEF | WHILE_LOOP | FOR_LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS | INPUT
-LOOP_ACTION -> LOOP_ACTION LOOP_ACTION | ACTION | break | continue
+ACTION -> VAR = V ACTION | VAR = TUPLE ACTION | VAR + = V ACTION | VAR - = V ACTION | VAR * = V ACTION | VAR / = V ACTION | VAR % = V ACTION | DEF ACTION | WHILE_LOOP ACTION | FOR_LOOP ACTION | RAISE ACTION | COMMENT ACTION | PRINT ACTION | CLASS ACTION | IF_CONDITION ACTION | METHOD ACTION | FUNCTION ACTION | WITH ACTION | IMPORT ACTION | PASS ACTION | ACTION VAR = V | ACTION VAR = TUPLE | ACTION VAR + = V | ACTION VAR - = V | ACTION VAR * = V | ACTION VAR / = V | ACTION VAR % = V | ACTION DEF | ACTION WHILE_LOOP | ACTION FOR_LOOP | ACTION RAISE | ACTION COMMENT | ACTION PRINT | ACTION CLASS | ACTION IF_CONDITION | ACTION METHOD | ACTION FUNCTION | ACTION WITH | ACTION IMPORT | ACTION PASS | VAR = V | VAR = TUPLE | VAR + = V | VAR - = V | VAR * = V | VAR / = V | VAR % = V | DEF | WHILE_LOOP | FOR_LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS
+LOOP_ACTION -> LOOP_ACTION LOOP_ACTION | ACTION | break | continue | COMMENT
 
-IF_CONDITION -> if BRACKETS_COMPARE : ACTION | if BRACKETS : LOOP_ACTION ELIF_CONDITION | if V : | if V : ELIF_CONDITION
-ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else : ACTION
+IF_CONDITION -> if BRACKETS : LOOP_ACTION | if BRACKETS : LOOP_ACTION ELIF_CONDITION | if V : LOOP_ACTION | if V : LOOP_ACTION ELIF_CONDITION
+ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else : | elif BRACKETS :
 
 
 WHILE_LOOP -> while ( BOOL_LOOP ) : LOOP_ACTION 
 BOOL_LOOP -> VAR | True | False | VAR COMPARE VAR
-FOR_LOOP -> for VAR in ITERABLE : LOOP_ACTION | for VAR in range ( VAR , VAR , VAR ) : LOOP_ACTION | for VAR in range ( VAR , VAR ) : LOOP_ACTION | for VAR in range ( VAR ) : LOOP_ACTION | for VAR in range ( num , num , num ) : LOOP_ACTION | for VAR in range ( num , num ) : LOOP_ACTION | for VAR in range ( num ) : LOOP_ACTION | for VAR in range ( VAR , num , num ) : LOOP_ACTION | for VAR in range ( num , VAR , num ) : LOOP_ACTION | for VAR in range ( num , num , VAR ) : LOOP_ACTION | for VAR in range ( VAR , VAR , num ) : LOOP_ACTION | for VAR in range ( VAR , num , VAR ) : LOOP_ACTION | for VAR in range ( num , VAR , VAR ) : LOOP_ACTION
+FOR_LOOP -> for VAR in ITERABLE : LOOP_ACTION | for VAR in range ( INPUT_RANGE ) :  LOOP_ACTION | for VAR in range ( INPUT_RANGE , INPUT_RANGE ) :  LOOP_ACTION | for VAR in range ( INPUT_RANGE , INPUT_RANGE , INPUT_RANGE ) :  LOOP_ACTION
 ITERABLE -> LIST | TUPLE | VAR
-FOR_RANGE -> ( VAR , VAR , VAR ) | ( VAR ) | ( VAR , VAR ) | ( num ) | ( num , num , num ) | ( num , num )
+INPUT_RANGE -> VAR | num | INPUT_RANGE OPS INPUT_RANGE 
 
 CLASS -> class VAR ( PARAM ) : | class VAR ( ) : | class Var :
 
@@ -36,20 +36,24 @@ DICT_CONT -> DICT_CONT , DICT_CONT | DICT_TYPE
 DICT_TYPE -> DICT_KEY : VAL
 DICT_KEY -> STRING | num
 
+INPUT -> input BRACKETS | TYPE ( INPUT )
+TYPE -> str | int | float | double
+
 RAISE -> raise FUNCTION
-PRINT -> print ( V )
+PRINT -> print BRACKETS
 BRACKETS -> ( V ) | ( )
-COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
-VAR -> variable
+COMMENT -> # STRING | " " " STRING " " " | ' ' ' STRING ' ' '
+VAR -> variable | 
 BRACKETS_BOOL -> ( V eq V ) | ( V ) | ( True ) | ( False )
 
-V -> VAL | VAR | V OPS V | V COMPARE V | V , V
+V -> VAL | VAR | V OPS V | V COMPARE V | V , V | INPUT | STRING
 
 COMPARE -> eq | neq | < | > | le | ge
 VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD
-TUPLE -> ( V )
-LIST -> [ V ]
+TUPLE -> ( container )
+LIST -> [ container ]
+container -> V | V , V
 OPS -> + | - | * | / | % | pow | div
-STRING -> ' string ' | " string " | STRING + STRING
+STRING -> ' STRING ' | " STRING " | " " | STRING + STRING | string | STRING STRING
 BOOL -> True | False | V is V | V COMPARE V | V and V | V or V | not V 
 PASS -> pass

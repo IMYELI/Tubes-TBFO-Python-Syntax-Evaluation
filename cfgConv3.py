@@ -135,31 +135,36 @@ def subMoreThan2():
         right = cnf[i]
         for j in range(len(right)):
             if(len(right[j])>2):                    #KALO ADA YANG LEBIH DARI 2 VAR BUAT SATU RULE BAKAL DISUBSTITUSI
-                for k in range(len(right[j])//2):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
+                balance = 0
+                for k in range((len(right[j])-2)):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
                     tmp = []
-                    tmp.append(right[j][k])
-                    tmp.append(right[j][k+1])
+                    tmp.append(right[j][k-balance])
+                    tmp.append(right[j][k+1-balance])
                     if(not isExistInRHS(tmp)):
-                        RHS.append([[right[j][k]]])
+                        RHS.append([[right[j][k-balance]]])
                         panj = len(RHS)
-                        RHS[panj-1][0].append(right[j][k+1])
-                        newVar = VAR + str(count) 
-                        right[j].remove(right[j][k+1])
-                        right[j].remove(right[j][k])
-                        right[j].insert(k,newVar)
+                        RHS[panj-1][0].append(right[j][k+1-balance])
+                        newVar = VAR + str(count)
+                        right[j].remove(right[j][k+1-balance])
+                        right[j].remove(right[j][k-balance])
+                        right[j].insert(k-balance,newVar)
                         LHS.append(newVar)
                         RHS[idx][j] = right[j]
                         count += 1
                     else:
-                        right[j].remove(right[j][k+1])
-                        right[j].remove(right[j][k])
-                        tmp2 = retLHSFromRHS(tmp)
-                        right[j].insert(k,tmp2)
                         
+                        right[j].remove(right[j][k+1-balance])
+                        right[j].remove(right[j][k-balance])
+                        tmp2 = retLHSFromRHS(tmp)
+                        right[j].insert(k-balance,tmp2)
+                        
+                    balance += 1
         idx+=1
     assignNewdict()
   
-            
+
+
+
 
 '''
     isEpsilonProduced()

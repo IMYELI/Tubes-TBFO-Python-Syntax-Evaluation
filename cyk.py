@@ -82,12 +82,17 @@ def cyk(token):
                 arr[i][j] = [searchVar(tmp4)]
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
-                #print('\n',tmp4,i,j,'\n\n')
+               # print('\n',tmp4,i,j,'\n\n')
                 #printCNF(arr)
         #print(arr)
         level += 1
-    if(arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and arr[panjang-1][0][0][0] == 'S0'):
+    if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and arr[panjang-1][0][0][0] == 'S0' )):
         return True
+    elif(arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0):
+        for i in arr[panjang-1][0]:
+            for j in i:
+                if [j] in RHS[0]:
+                    return True
     return False
     '''
     for i in arr:
@@ -101,7 +106,7 @@ def cyk(token):
 
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    file = tokenizeInput('test2.py')
+    file = tokenizeInput('H02_16520192_01.py')
     print(file)
     if(cyk(file)):
         print("Syntax valid!")

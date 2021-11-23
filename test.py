@@ -1,1 +1,2 @@
-from a import b
+for i in range(a,b):
+    pass

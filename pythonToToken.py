@@ -12,7 +12,7 @@ def tokenizeInput(inputFilename):
     #operators1 = [':', ',','<=', '>=', '<', '>',  '==', '!=', r'\+', '-', r'\*', '/', r'\*\*', r'\(', r'\)',r'\'\'\'', r'\'', r'\"',r'\[',r'\]']
     
     shouldNotBeTokenized = ['False','class','is','return','None','continue','for','True','def','from','while','and','not','with','as','elif','if','or','else','import','pass','break','in','raise','global',
-                            ']','[','(',')','{','}','print','input','"',"'","#","range",'=']
+                            ']','[','(',')','{','}','print','input','"',"'","#","range",'=','input','int','str','float','double']
     number = ['0','1','2','3','4','5','6','7','8','9']
     alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -26,6 +26,9 @@ def tokenizeInput(inputFilename):
     bool_detect_eq = False
     bool_detect_pow = False
     bool_detect_div = False
+    bool_detect_one = False
+    bool_detect_input = False
+    bool_detect_int = False
     for char in result:
         if(char != ' '): 
             lex+= char
@@ -50,8 +53,24 @@ def tokenizeInput(inputFilename):
                 bool_detect_div = False
             elif(bool_detect_eq and result[i+1] !="=" ):
                 bool_detect_eq = False
+            if(lex == '#'):
+                bool_detect_one = True
+                res.append(lex)
+                lex = ''
+            if(bool_detect_one and result[i+1] =='\n'):
+                lex = 'string'
+                bool_detect_one = False
+            if(i+3<len(result)):
+                if(lex == 'in' and result[i+1] == 'p' and result[i+2] == 'u' and result[i+3] == 't'):
+                    bool_detect_input = True
+            if(bool_detect_input and lex == 'input'):
+                bool_detect_input = False
+            if(lex == 'in' and result[i+1] == 't'):
+                    bool_detect_int = True
+            if(bool_detect_int and lex == 'int'):
+                bool_detect_int = False
             
-            if(not (bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
+            if(not (bool_detect_int or bool_detect_input or bool_detect_one or bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
                 if lex != '':
                     if(lex != '\n'):
                         res.append(lex)
@@ -99,6 +118,8 @@ def tokenizeInput(inputFilename):
             bool_conv = True
         if(bool_string and not bool_conv):
             splitword = 'string'
+            bool_conv = True
+        if(splitword=='string'):
             bool_conv = True
         '''
         if(splitword == "(" and not bool_conv):

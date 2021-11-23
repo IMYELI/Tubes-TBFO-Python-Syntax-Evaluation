@@ -1,4 +1,4 @@
-S -> S S | IF | WHILE | FOR | PRINT
+S -> S S | IF | WHILE | FOR | PRINT | VAR = VAL | VAR = ADT
 IF -> if ( CONDITION ) : S
 WHILE -> while ( CONDITION ) : ACTION_LOOP
 CONDITION -> VAL COMPARE VAL
@@ -6,6 +6,9 @@ COMPARE -> eq | neq | < | > | le | ge
 ACTION_LOOP -> ACTION_LOOP ACTION_LOOP | S | break | continue
 ACTION -> VAR = VAL | VAR = LIST
 OPERATOR -> + | - | * | /
-VAL -> VAR | num | VAR OPERATOR VAR
+VAL -> VAR | num | VAR OPERATOR VAR | VAL , VAL
 PRINT -> print ( VAL )
 VAR -> variable
+ADT -> LIST | TUPLE | DICT
+LIST -> [ VAL , VAL ]
+TUPLE -> ( VAL )

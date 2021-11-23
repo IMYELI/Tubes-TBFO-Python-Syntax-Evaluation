@@ -83,6 +83,7 @@ def uselessRemovalSTATE():
                     right.remove(j)
                     for k in tmp:
                         right.append(k)
+        
     for i in range(len(LHS)):
         if(isCallingItself(LHS[i])):
             RHS[i].remove([LHS[i]])
@@ -96,6 +97,7 @@ def eliminateTerminal():
     for i in range(len(LHS)):
         right = cnf[LHS[i]]
         for j in right:
+
             if(isContainLHS(j) and isContainRHS(j)): #MENGECEK JIKA ADA TERMINAL DAN VARIABEL YANG BERDAMPINGAN
                 for k in j:
                     if(k not in LHS):                   
@@ -134,32 +136,50 @@ def subMoreThan2():
     for i in cnf:
         right = cnf[i]
         for j in range(len(right)):
+            if(LHS[idx] == 'TUPLE'):
+                print(right[j])
             if(len(right[j])>2):                    #KALO ADA YANG LEBIH DARI 2 VAR BUAT SATU RULE BAKAL DISUBSTITUSI
-                for k in range(len(right[j])//2):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
+                for k in range(len(right[j])-1,1,-1):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
+                    if(LHS[idx] == 'TUPLE'):
+                        print(right[j])
                     tmp = []
+                    tmp.append(right[j][k-1])
                     tmp.append(right[j][k])
-                    tmp.append(right[j][k+1])
+                    if(LHS[idx] == 'TUPLE'):
+                        print(right[j])
                     if(not isExistInRHS(tmp)):
-                        RHS.append([[right[j][k]]])
+                        RHS.append([[right[j][k-1]]])
                         panj = len(RHS)
-                        RHS[panj-1][0].append(right[j][k+1])
+                        RHS[panj-1][0].append(right[j][k])
                         newVar = VAR + str(count) 
-                        right[j].remove(right[j][k+1])
-                        right[j].remove(right[j][k])
+                        #right[j].remove(right[j][k])
+                        #right[j].remove(right[j][k-1])
+                        removeFromBehind(right[j],right[j][k])
+                        removeFromBehind(right[j],right[j][k-1])
                         right[j].insert(k,newVar)
                         LHS.append(newVar)
                         RHS[idx][j] = right[j]
                         count += 1
+
                     else:
-                        right[j].remove(right[j][k+1])
-                        right[j].remove(right[j][k])
+                        removeFromBehind(right[j],right[j][k])
+                        removeFromBehind(right[j],right[j][k-1])
+                        #right[j].remove(right[j][k])
+                        #right[j].remove(right[j][k-1])
                         tmp2 = retLHSFromRHS(tmp)
                         right[j].insert(k,tmp2)
-                        
+                        RHS[idx][j] = right[j]
         idx+=1
     assignNewdict()
-  
+    
             
+def removeFromBehind(arr,val):
+    for i in range(len(arr)-1,-1,-1):
+        if(arr[i] == val):
+            for j in range(i,len(arr)-1):
+                arr[i] = arr[i+1]
+            arr.pop()
+            break
 
 '''
     isEpsilonProduced()
