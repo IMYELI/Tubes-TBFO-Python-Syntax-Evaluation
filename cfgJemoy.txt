@@ -40,7 +40,7 @@ INPUT -> input BRACKETS | TYPE ( INPUT )
 TYPE -> str | int | float | double
 
 RAISE -> raise FUNCTION
-PRINT -> print BRACKETS
+PRINT -> print BRACKETS | print ( ' ' ) | print ( " " )
 BRACKETS -> ( V ) | ( )
 COMMENT -> # STRING | " " " STRING " " " | ' ' ' STRING ' ' '
 VAR -> variable | 
