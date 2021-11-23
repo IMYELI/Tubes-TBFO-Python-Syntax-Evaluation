@@ -3,7 +3,7 @@ from pythonToToken import tokenizeInput
 CNF={}
 LHS = []
 RHS = []
-HEAD = ['for','while','if']
+HEAD = ['for','while','if','def']
 
 def readCNF(filename):
     with open(filename) as file:
