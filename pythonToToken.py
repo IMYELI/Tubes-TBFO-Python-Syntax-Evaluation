@@ -25,6 +25,8 @@ def tokenizeInput(contents):
     bool_detect_one = False
     bool_detect_input = False
     bool_detect_int = False
+    bool_dot = False
+    bool_num = False
     for char in result:
         if(char != ' '): 
             lex+= char
@@ -65,7 +67,12 @@ def tokenizeInput(contents):
                     bool_detect_int = True
             if(bool_detect_int and lex == 'int'):
                 bool_detect_int = False
-            if(not (bool_detect_int or bool_detect_input or bool_detect_one or bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
+            if(result[i]=='.'):
+                lex = lex[0:(len(lex)-2)]
+                bool_dot = True
+            if(bool_dot and result[i] != '.'):
+                bool_dot = False
+            if(not (bool_num or bool_dot or bool_detect_int or bool_detect_input or bool_detect_one or bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
                 if lex != '':
                     if(lex != '\n'):
                         res.append(lex)
@@ -116,6 +123,7 @@ def tokenizeInput(contents):
             bool_conv = True
         if(splitword=='string'):
             bool_conv = True
+        
         '''
         if(splitword == "(" and not bool_conv):
             bool_par = True
@@ -133,6 +141,8 @@ def tokenizeInput(contents):
                 splitword = 'variable'
             elif(splitword == ''):
                 splitword = 'kosong'
+            elif(isNumber(splitword)):
+                splitword = 'num'
             else:
                 splitword = 'variableError'
             bool_conv = True
@@ -147,6 +157,16 @@ def tokenizeInput(contents):
     result = [string for string in result if string!='']
 
     return result
+
+def isNumber(char):
+    number = ['0','1','2','3','4','5','6','7','8','9']
+    num = False
+    for i in char:
+        if(i in number):
+            num = True
+        elif(number and i not in number):
+            return False
+    return num
 
 if (__name__ == "__main__"):
     file = tokenizeInput("test2.py")
