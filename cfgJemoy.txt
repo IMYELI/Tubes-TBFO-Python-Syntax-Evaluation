@@ -50,11 +50,15 @@ BRACKETS_BOOL -> ( V eq V ) | ( V ) | ( True ) | ( False )
 V -> VAL | VAR | V OPS V | V COMPARE V | V , V | INPUT | STRING
 
 COMPARE -> eq | neq | < | > | le | ge
-VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD
+VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD | ARRAY
+
+ARRAY -> VAR [ INDEX ] | VAR [ : ] | VAR [ INDEX : ] | VAR [ : INDEX ] | VAR [ INDEX : INDEX ]
+INDEX -> num | VAR | STRING
+
 TUPLE -> ( container )
 LIST -> [ container ]
 container -> V | V , V
 OPS -> + | - | * | / | % | pow | div
-STRING -> ' STRING ' | " STRING " | " " | STRING + STRING | string | STRING STRING
+STRING -> ' STRING ' | " STRING " | " " | ' ' | STRING + STRING | string | STRING STRING
 BOOL -> True | False | V is V | V COMPARE V | V and V | V or V | not V 
 PASS -> pass
