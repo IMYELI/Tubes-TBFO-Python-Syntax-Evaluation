@@ -1,4 +1,4 @@
 def aba(bobo):
-    apa = apa
-    while(True):
+    apa = apa + 2
+    while(a == 123b):
         print(1)

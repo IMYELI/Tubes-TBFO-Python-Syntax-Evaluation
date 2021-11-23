@@ -83,7 +83,7 @@ def cyk(token):
                 arr[i][j] = [searchVar(tmp4)]
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
-               # print('\n',tmp4,i,j,'\n\n')
+                #print('\n',tmp4,i,j,'\n\n')
                 #printCNF(arr)
         #print(arr)
         level += 1
@@ -102,7 +102,8 @@ def cyk(token):
 
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    with open('test2.py') as file:
+    with open('H02_16520192_01.py') as file:
+        kebenaran = True
         line = file.readline()
         while(line != ''):
             tmp = []
@@ -114,14 +115,17 @@ if(__name__ == "__main__"):
                 line = line.replace("\n",'')
                 tmp.append(line)
                 token += tokenizeInput(line)
-            kebenaran = cyk(token)
-            if(kebenaran):
+            print(token)
+            if(line != ''):
+                kebenaran = cyk(token)
+            if(kebenaran and line != ''):
                 for i in tmp:
                     print(i)
             else:
-                for i in tmp:
-                    print(i,end='   <-- Ada yang salah')
-                    print()
+                if(line != ''):
+                    for i in tmp:
+                        print(i,end='   <-- Ada yang salah')
+                        print()
             line = file.readline()
 
 #    file = tokenizeInput('test2.py')

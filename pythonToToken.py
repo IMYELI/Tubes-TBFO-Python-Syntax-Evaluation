@@ -138,7 +138,7 @@ def tokenizeInput(contents):
             bool_conv = True
         if(bool_par and (splitword == "'" or splitword == '"')):
             pass
-        else:
+        elif(splitword != 'kosong'):
             temporaryResult.append(splitword)
         
 
