@@ -83,8 +83,8 @@ def cyk(token):
                 arr[i][j] = [searchVar(tmp4)]
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
-         #       print('\n',tmp4,i,j,'\n\n')
-        #        printCNF(arr)
+        #        print('\n',tmp4,i,j,'\n\n')
+         #       printCNF(arr)
         #print(arr)
         level += 1
     if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and len(arr[panjang-1][0][0]) >= 1 )):
@@ -102,40 +102,49 @@ def cyk(token):
 
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    with open('test2.py') as file:
+    tokenList = []
+    lines = []
+    with open('test.py') as file:
         kebenaran = True
         line = file.readline()
         while(line != ''):
             tmp = []
             token = tokenizeInput(line)
+            tokenList.append(token)
             line = line.replace("\n",'')
+            lines.append(line)
             tmp.append(line)
-            if(token != []):
-                if(token[0] in HEAD):
-                    line = file.readline()
-                    token += tokenizeInput(line)
-                    line = line.replace("\n",'')
-                    tmp.append(line)
-                elif(len(token)>2):
-                    if(token[2] =="{" ):
-                        while(token[len(token)-1] != '}'):
-                            line = file.readline()
-                            line = line.replace("\n",'')
-                            tmp.append(line)
-                            token += tokenizeInput(line)
-                print(token)
-                if(line != ''):
-                    kebenaran = cyk(token)
-                if(kebenaran and line != ''):
-                    for i in tmp:
-                        print(i)
-                else:
-                    if(line != ''):
-                        for i in tmp:
-                            print(i,end='   <-- Ada yang salah')
-                            print()
             line = file.readline()
+    i = 0
+    bool_open_pr = False
+    while(i<len(tokenList)):
+        tmp = []
+        tmp.append(tokenList[i])
+        print(tokenList[i])
+        i += 1
+        for j in tokenList[i]:
+            if j == '(':
+                bool_open_pr = True
+            if(j == ')'):
+                bool_open_pr = False
+        while(bool_open_pr and i<len(tokenList)):
+            tmp[len(tmp)-1] += tokenList[i]
+            for j in tokenList[i]:
+                if(j == ')'):
+                    bool_open_pr = True
+            i += 1
 
+
+    if(line != ''):
+        kebenaran = cyk(token)
+    if(kebenaran and line != ''):
+        for i in tmp:
+            print(i)
+    else:
+        if(line != ''):
+            for i in tmp:
+                print(i,end='   <-- Ada yang salah')
+                print()
 #    file = tokenizeInput('test2.py')
  #   print(file)
   #  if(cyk(file)):

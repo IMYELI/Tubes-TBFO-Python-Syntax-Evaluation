@@ -55,7 +55,7 @@ def tokenizeInput(contents):
                 bool_detect_one = True
                 res.append(lex)
                 lex = ''
-            if(bool_detect_one and result[i+1] =='\n'):
+            if(bool_detect_one and (result[i+1] =='\n')):
                 lex = 'string'
                 bool_detect_one = False
             if(i+3<len(result)):
@@ -123,7 +123,6 @@ def tokenizeInput(contents):
             bool_conv = True
         if(splitword=='string'):
             bool_conv = True
-        
         '''
         if(splitword == "(" and not bool_conv):
             bool_par = True

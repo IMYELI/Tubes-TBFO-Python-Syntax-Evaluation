@@ -1,2 +1,2 @@
-if(i==1):
-    print(a)
+elif(a==b):
+    print(c)

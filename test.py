@@ -1,2 +1,2 @@
-for i in range(a,b):
-    pass
+elif(a==b):
+    print(c)
