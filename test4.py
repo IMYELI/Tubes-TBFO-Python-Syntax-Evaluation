@@ -1,2 +1,2 @@
-for a in a:
+class aba(bobo):
     print(a)

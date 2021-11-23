@@ -1,2 +1,1 @@
-if(a==b):
-    print(c)
+aba(boba(babi))

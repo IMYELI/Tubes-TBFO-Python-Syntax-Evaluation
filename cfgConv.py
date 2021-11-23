@@ -69,20 +69,33 @@ def uselessRemovalSTATE():
     #MENGHILANGKAN UNIT PRODUCTION
     for i in range(len(LHS)):
         right = cnf[LHS[i]]
-        for j in right:
+        n = len(right)
+        j=0
+        while(j<len(right)):
+            bool_detect = False
             global panggil
             if(not panggil):
-                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS):
-                    tmp = cnf[j[0]]
-                    right.remove(j)
+                if(len(right[j]) == 1 and right[j][0] != LHS[0] and right[j][0] in LHS):
+                    #print(j)
+                    
+                    tmp = cnf[right[j][0]]
+                    right.remove(right[j])
                     for k in tmp:
-                        right.append(k)
+                        right.insert(j,k)
+                        j+=1
+                        bool_detect = True
             else:
-                if(len(j) == 1 and j[0] != LHS[1] and j[0] in LHS):
-                    tmp = cnf[j[0]]
-                    right.remove(j)
+                if(len(right[j]) == 1 and right[j][0] != LHS[1] and right[j][0] in LHS):
+                    #print(j)
+                    tmp = cnf[right[j][0]]
+                    right.remove(right[j])
                     for k in tmp:
-                        right.append(k)
+                        right.insert(j,k)
+                        j+= 1
+                        bool_detect = True
+            if(not bool_detect):
+                j+=1
+        
     for i in range(len(LHS)):
         if(isCallingItself(LHS[i])):
             RHS[i].remove([LHS[i]])
@@ -157,7 +170,7 @@ def subMoreThan2():
                         right[j].remove(right[j][k+1-balance])
                         right[j].remove(right[j][k-balance])
                         tmp2 = retLHSFromRHS(tmp)
-                        right[j].insert(k,tmp2)
+                        right[j].insert(k-balance,tmp2)
                     k += 1
                     balance += 1
                     #print(RHS[idx][j])

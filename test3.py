@@ -1,6 +1,6 @@
 import cfgConv as cf
 
-cf.readCFG("cfgJemoy.txt")
+cf.readCFG("cfgUlang.txt")
 cf.STARTSTATE()
 cf.uselessRemovalSTATE()
 #cf.isEpsilonProduced()
