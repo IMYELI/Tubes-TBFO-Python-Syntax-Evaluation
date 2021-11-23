@@ -1,10 +1,11 @@
-Terminals:
-= * / - %
-Variables:
-S ACTION VAR VALUE OPS
-Productions:
-S -> ACTION S;
-ACTION -> VAR = VALUE;
-VAR -> variable;
-OPS -> * | / | + | - | %;
-VALUE -> NUM OPS NUM | NUM | STRING
+S -> S S | IF | WHILE | FOR | PRINT
+IF -> if ( CONDITION ) : S
+WHILE -> while ( CONDITION ) : ACTION_LOOP
+CONDITION -> VAL COMPARE VAL
+COMPARE -> eq | neq | < | > | le | ge
+ACTION_LOOP -> ACTION_LOOP ACTION_LOOP | S | break | continue
+ACTION -> VAR = VAL | VAR = LIST
+OPERATOR -> + | - | * | /
+VAL -> VAR | num | VAR OPERATOR VAR
+PRINT -> print ( VAL )
+VAR -> variable

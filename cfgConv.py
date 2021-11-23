@@ -72,7 +72,7 @@ def uselessRemovalSTATE():
         for j in right:
             global panggil
             if(not panggil):
-                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS and right != cnf[LHS[0]]):
+                if(len(j) == 1 and j[0] != LHS[0] and j[0] in LHS):
                     tmp = cnf[j[0]]
                     right.remove(j)
                     for k in tmp:
@@ -88,7 +88,6 @@ def uselessRemovalSTATE():
             RHS[i].remove([LHS[i]])
     RHS[0] = RHS[1]
     assignNewdict()
-    
     
 
 
@@ -137,16 +136,27 @@ def subMoreThan2():
         for j in range(len(right)):
             if(len(right[j])>2):                    #KALO ADA YANG LEBIH DARI 2 VAR BUAT SATU RULE BAKAL DISUBSTITUSI
                 for k in range(len(right[j])//2):   #BAKAL DILAKUIN SEBANYAK VARIABLE DIV 2
-                    RHS.append([[right[j][k]]])
-                    panj = len(RHS)
-                    RHS[panj-1][0].append(right[j][k+1])
-                    newVar = VAR + str(count) 
-                    right[j].remove(right[j][k+1])
-                    right[j].remove(right[j][k])
-                    right[j].insert(k,newVar)
-                    LHS.append(newVar)
+                    tmp = []
+                    tmp.append(right[j][k])
+                    tmp.append(right[j][k+1])
                     RHS[idx][j] = right[j]
-                    count += 1
+                    if(not isExistInRHS(tmp)):
+                        RHS.append([[right[j][k]]])
+                        panj = len(RHS)
+                        RHS[panj-1][0].append(right[j][k+1])
+                        newVar = VAR + str(count) 
+                        right[j].remove(right[j][k+1])
+                        right[j].remove(right[j][k])
+                        right[j].insert(k,newVar)
+                        LHS.append(newVar)
+                        RHS[idx][j] = right[j]
+                        count += 1
+                    else:
+                        right[j].remove(right[j][k+1])
+                        right[j].remove(right[j][k])
+                        tmp2 = retLHSFromRHS(tmp)
+                        right[j].insert(k,tmp2)
+                        
         idx+=1
     assignNewdict()
   
@@ -178,7 +188,17 @@ def isEpsilonProduced():        #MENCARI NON TERMINAL YANG MENGHASILKAN EPSILON
 
     return
 '''
+def isExistInRHS(right):
+    for i in RHS:
+        if (len(i) == 1 and right in i):
+            return True
+    return False
 
+def retLHSFromRHS(right):
+    for i in range(len(RHS)):
+        if (len(RHS[i]) == 1 and right in RHS[i]):
+            return LHS[i]
+    return None
 def isCallingItself(left):
     right = cnf[left]
     for i in right:

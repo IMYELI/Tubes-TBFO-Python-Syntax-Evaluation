@@ -1,3 +1,1 @@
-A = b + c
-while(a>=b):
-    print(A)
+from a import b

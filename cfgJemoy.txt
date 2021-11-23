@@ -1,15 +1,16 @@
 S -> ACTION
-ACTION -> ACTION ACTION | VAR = V | VAR + = V | VAR - = V | VAR * = V | VAR / = V | VAR % = V | DEF | LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS | INPUT
+ACTION -> ACTION ACTION | VAR = V | VAR = TUPLE | VAR + = V | VAR - = V | VAR * = V | VAR / = V | VAR % = V | DEF | WHILE_LOOP | FOR_LOOP | RAISE | COMMENT | PRINT | CLASS | IF_CONDITION | METHOD | FUNCTION | WITH | IMPORT | PASS | INPUT
 LOOP_ACTION -> LOOP_ACTION LOOP_ACTION | ACTION | break | continue
 
-IF_CONDITION -> if BRACKETS : | if BRACKETS : ELIF_CONDITION | if V : | if V : ELIF_CONDITION
-ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else :
+IF_CONDITION -> if BRACKETS_COMPARE : ACTION | if BRACKETS : LOOP_ACTION ELIF_CONDITION | if V : | if V : ELIF_CONDITION
+ELIF_CONDITION -> elif BRACKETS : ACTION ELIF_CONDITION | else : ACTION
 
-LOOP -> WHILE_LOOP LOOP_ACTION | FOR_LOOP LOOP_ACTION
-WHILE_LOOP -> while BRACKETS :
-FOR_LOOP -> for VAR in ITERABLE :
-ITERABLE -> LIST | TUPLE | range FOR_RANGE
-FOR_RANGE -> ( num , num , num ) | ( num ) | ( num , num )
+
+WHILE_LOOP -> while ( BOOL_LOOP ) : LOOP_ACTION 
+BOOL_LOOP -> VAR | True | False | VAR COMPARE VAR
+FOR_LOOP -> for VAR in ITERABLE : LOOP_ACTION | for VAR in range ( VAR , VAR , VAR ) : LOOP_ACTION | for VAR in range ( VAR , VAR ) : LOOP_ACTION | for VAR in range ( VAR ) : LOOP_ACTION | for VAR in range ( num , num , num ) : LOOP_ACTION | for VAR in range ( num , num ) : LOOP_ACTION | for VAR in range ( num ) : LOOP_ACTION | for VAR in range ( VAR , num , num ) : LOOP_ACTION | for VAR in range ( num , VAR , num ) : LOOP_ACTION | for VAR in range ( num , num , VAR ) : LOOP_ACTION | for VAR in range ( VAR , VAR , num ) : LOOP_ACTION | for VAR in range ( VAR , num , VAR ) : LOOP_ACTION | for VAR in range ( num , VAR , VAR ) : LOOP_ACTION
+ITERABLE -> LIST | TUPLE | VAR
+FOR_RANGE -> ( VAR , VAR , VAR ) | ( VAR ) | ( VAR , VAR ) | ( num ) | ( num , num , num ) | ( num , num )
 
 CLASS -> class VAR ( PARAM ) : | class VAR ( ) : | class Var :
 
@@ -25,7 +26,7 @@ FUNCTION -> VAR BRACKETS
 WITH -> with WITH_TYPE as VAR :
 WITH_TYPE -> METHOD | FUNCTION
 
-IMPORT -> from IMPORT_CONT import MODULE | import MODULE | import MULT_MODULE
+IMPORT -> from IMPORT_CONT import MODULE | import MODULE | import MULT_MODULE | from IMPORT_CONT import MODULE as VAR
 MULT_MODULE -> MULT_MODULE , MULT_MODULE | IMPORT_CONT as VAR 
 MODULE -> * | VAR | MULT_MODULE | MODULE , MODULE
 IMPORT_CONT ->  IMPORT_CONT . IMPORT_CONT | VAR
@@ -40,8 +41,9 @@ PRINT -> print ( V )
 BRACKETS -> ( V ) | ( )
 COMMENT -> # string | " " " string " " " | ' ' ' string ' ' '
 VAR -> variable
+BRACKETS_BOOL -> ( V eq V ) | ( V ) | ( True ) | ( False )
 
-V -> VAL | VAR | V OPS V
+V -> VAL | VAR | V OPS V | V COMPARE V | V , V
 
 COMPARE -> eq | neq | < | > | le | ge
 VAL -> STRING | num |  BOOL | TUPLE | None | LIST | DICT | FUNCTION | METHOD

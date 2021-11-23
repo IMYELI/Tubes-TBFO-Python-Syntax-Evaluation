@@ -80,7 +80,7 @@ def tokenizeInput(inputFilename):
             splitword = 'eq'
             bool_conv = True
         elif(splitword =='!='):
-            splitword = 'ne'
+            splitword = 'neq'
             bool_conv = True
         elif(splitword == '//'):
             splitword = 'div'

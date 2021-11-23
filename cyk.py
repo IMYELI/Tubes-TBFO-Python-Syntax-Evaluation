@@ -47,10 +47,11 @@ def searchVar(var):
         return 0
 
 def printCNF(arr):
+    level = 0
     for i in arr:
-        for j in i:
-            if(j != 0):
-                print(j,end=' ')
+        for j in range(len(i)-level):
+            print(i[j],end=' ')
+        level +=1
         print()
 
 def cyk(token):
@@ -78,11 +79,11 @@ def cyk(token):
                             tmp3.append(tmp[m][0][n])
                             tmp3.append(tmp[m][1][o])
                             tmp4.append(tmp3)
-                #print(tmp4,i,j,'\n\n')
-                #printCNF(arr)
                 arr[i][j] = [searchVar(tmp4)]
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
+                #print('\n',tmp4,i,j,'\n\n')
+                #printCNF(arr)
         #print(arr)
         level += 1
     if(arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and arr[panjang-1][0][0][0] == 'S0'):
