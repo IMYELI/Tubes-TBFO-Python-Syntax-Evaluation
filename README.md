@@ -10,7 +10,7 @@
 
 ## Cara Run Kode
 - Jika anda ingin menggunakan CFG anda sendiri gunakan format sebagai berikut pada CFG untuk convert ke CNF:
-[](./Docs/img/format_cfg.png)
+![image](https://user-images.githubusercontent.com/74661051/143228811-a95c33a1-8482-44a7-b3c1-a217fa8099ca.png)
 - Gunakan cfgConv.py untuk convert ke CNF dengan format :
 - ```python cfgConv.py <Nama_file>``` contoh : ```python cfgConv.py cfg.txt```
 - Pengecekan syntax dilakukan pada file cyk.py
@@ -21,4 +21,5 @@
 - Contoh penggunaan : ```python cyk.py <arg1> <arg2>``` ```python cyk.py test2.py CNF.txt```
 
 ## Contoh Penggunaan dan Output
-[](./Docs/img/penggunaan.png) 
+![image](https://user-images.githubusercontent.com/74661051/143228878-a3e79f2d-2ef3-49c5-a6ed-6003024ea461.png)
+![image](https://user-images.githubusercontent.com/74661051/143228925-30b94d2c-1f53-4003-a0c9-eaf3c620ecfb.png)
