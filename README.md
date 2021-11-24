@@ -21,5 +21,5 @@
 - Contoh penggunaan : ```python cyk.py <arg1> <arg2>``` ```python cyk.py test2.py CNF.txt```
 
 ## Contoh Penggunaan dan Output
-![image](https://user-images.githubusercontent.com/74661051/143228878-a3e79f2d-2ef3-49c5-a6ed-6003024ea461.png)
-![image](https://user-images.githubusercontent.com/74661051/143228925-30b94d2c-1f53-4003-a0c9-eaf3c620ecfb.png)
+![image](https://user-images.githubusercontent.com/74661051/143233402-fc13054d-1b1a-4314-83ad-baccfa474053.png)
+![image](https://user-images.githubusercontent.com/74661051/143233511-3f36f4e5-1363-4a83-8fa9-6081be89d910.png)
