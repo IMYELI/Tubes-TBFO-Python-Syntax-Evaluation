@@ -168,6 +168,7 @@ if(__name__ == "__main__"):
     bool_if = False
     bool_head = False
     bool_list = False
+    bool_loop = False
     count_bracket = 0
     count_single = 0
     count_quote = 0
@@ -194,6 +195,8 @@ if(__name__ == "__main__"):
                 count_bracket -= 1
             elif(j == "if"):
                 bool_if = True
+            elif(j == "while" or j == "for"):
+                bool_loop = True
             if(j in HEAD and j != 'if'):
                 bool_if = False
             if(not bool_if and (j == 'elif' or j == 'else')):
@@ -217,6 +220,8 @@ if(__name__ == "__main__"):
                 bool_multi_comment = False
             elif(count_single == 0):
                 bool_multi_comment = False
+            if(not bool_loop and (j=='break' or j == 'continue')):
+                bool_false = True
             if(bool_multi_comment):
                 bool_head = True
         i += 1
@@ -262,6 +267,8 @@ if(__name__ == "__main__"):
                     bool_multi_comment = False
                 if(bool_multi_comment):
                     bool_head = True
+                if(not bool_loop and (j=='break' or j == 'continue')):
+                    bool_false = True
             i += 1
         while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList) or count_bracket >0):
             tmp[len(tmp)-1] += tokenList[i]
@@ -279,6 +286,8 @@ if(__name__ == "__main__"):
                     count_bracket += 1
                 if(j in HEAD and j != 'if'):
                     bool_if = False
+                if(not bool_loop and (j=='break' or j == 'continue')):
+                    bool_false = True
             i += 1
 
         #print('\n',tmp[0],bool_false)
