@@ -86,7 +86,7 @@ def tokenizeInput(contents):
                 bool_dont = False
             elif(bool_dont_is and lex == 'is' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
                 bool_dont_is = False'''
-            if(result[i]=='.'):
+            if(result[i]=='.' and result[i+1] != '"' and result[i+1] != '"'):
                 lex = lex[0:(len(lex)-1)]
                 bool_dot = True
             if(bool_dot and result[i] != '.'):
