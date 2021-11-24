@@ -222,6 +222,7 @@ if(__name__ == "__main__"):
                 bool_multi_comment = False
             if(not bool_loop and (j=='break' or j == 'continue')):
                 bool_false = True
+                lineErr.append(i+1)
             if(bool_multi_comment):
                 bool_head = True
         i += 1
@@ -269,6 +270,7 @@ if(__name__ == "__main__"):
                     bool_head = True
                 if(not bool_loop and (j=='break' or j == 'continue')):
                     bool_false = True
+                    lineErr.append(i+1)
             i += 1
         while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList) or count_bracket >0):
             tmp[len(tmp)-1] += tokenList[i]
