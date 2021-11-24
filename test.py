@@ -1,1 +1,4 @@
-section = length // 4
+
+
+def printCNF(arr):
+    level = 0

@@ -1,5 +1,5 @@
 S0 -> ACTION
-ACTION -> IMPORT | VAR = VAL | VAR OPS = VAL | VAR = ITERABLE | IF_CONDITION | VAR = DICT | VAR = INPUT | VAR = INDEXARR | FOR_LOOP | ELIF | RETURN | VAR = INDEXARR | continue | CLASS | WHILE_LOOP | DEF | DICT | PRINT | pass | break | COMMENT | INDEXARR = VAL | FUNCTION | INDEXARR = ITERABLE | ACTION ACTION 
+ACTION -> IMPORT | VAR = VAL | VAR OPS = VAL | VAR = ITERABLE | IF_CONDITION | WITH | VAR = DICT | VAR = INPUT | VAR = INDEXARR | FOR_LOOP | ELIF | RETURN | VAR = INDEXARR | continue | CLASS | WHILE_LOOP | DEF | DICT | PRINT | pass | break | COMMENT | INDEXARR = VAL | FUNCTION | INDEXARR = ITERABLE | ACTION ACTION 
 
 FOR_LOOP -> for VAR in range ( VAL_LOOP ) : ACTION_LOOP | for VAR in ITERABLE : ACTION_LOOP | for VAR in range ( NUM ) : ACTION_LOOP | for VAR in range ( FUNCTION ) : ACTION_LOOP 
 ITERABLE -> LIST | TUPLE | VAR | MATRIX | STRING
@@ -13,10 +13,12 @@ DEF -> def VAR ( ) : ACTION | def VAR ( INPUT_DEF ) : ACTION
 RETURN -> return VAL | return True | return False | return LIST | return TUPLE | return DICT | return
 INPUT_DEF -> INPUT_DEF , INPUT_DEF | variable
 
+WITH -> with FUNCTION as VAR : ACTION
+
 IF_CONDITION -> if ( VAL ) : ACTION | if ( VAL ) : ACTION ELIF | if VAL : ACTION | if VAL : ACTION ELIF | if ( FUNCTION ) : ACTION | if ( FUNCTION COMPARE FUNCTION ) : ACTION
 ELIF -> elif ( VAL ) : ACTION | else : ACTION | elif VAL : ACTION | elif ( BOOL_OPS ) : ACTION | elif BOOL_OPS : ACTION
 
-PRINT -> print ( INPUT_PRINT ) | print ( ' ' ) | print( " " )
+PRINT -> print ( INPUT_PRINT ) | print ( ' ' ) | print ( " " ) | print ( )
 INPUT_PRINT -> INPUT_PRINT , INPUT_PRINT | variable | NUM | NUM OPS NUM | VAL COMPARE VAL | INPUT | STRING | INDEXARR | VAL | TYPE ( INPUT_PRINT )
 
 CLASS -> class VAR ( PARAM_CLASS ) : ACTION | class VAR ( ) : ACTION | class VAR : ACTION
