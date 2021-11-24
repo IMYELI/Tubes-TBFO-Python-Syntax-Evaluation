@@ -149,6 +149,14 @@ if(__name__ == "__main__"):
             sys.exit()
     tokenList = []
     lines = []
+    print("""  _____  ______ _  ______  __  __ _____ _____ _      ______ _____  
+ |  __ \|  ____| |/ / __ \|  \/  |  __ \_   _| |    |  ____|  __ \ 
+ | |__) | |__  | ' / |  | | \  / | |__) || | | |    | |__  | |__) |
+ |  ___/|  __| |  <| |  | | |\/| |  ___/ | | | |    |  __| |  _  / 
+ | |    | |____| . \ |__| | |  | | |    _| |_| |____| |____| | \ \ 
+ |_|    |______|_|\_\____/|_|  |_|_|   |_____|______|______|_|  \_\\
+                                                                   """)
+    print()
     border(30)
     with open(fileName) as file:
         kebenaran = True
@@ -171,13 +179,13 @@ if(__name__ == "__main__"):
     bool_loop = False
     count_bracket = 0
     count_single = 0
-    count_quote = 0
     bool_multi_comment = False
     lineErr = []
     while(i<len(tokenList)):
         bool_false = False
         tmp = []
         tmp.append(tokenList[i])
+        count_quote = 0
         for j in tokenList[i]:
             if j == '(':
                 bool_open_pr = True
@@ -233,6 +241,7 @@ if(__name__ == "__main__"):
             tmp[len(tmp)-1] += tokenList[i]
             if(tokenList[i] != []):
                 bool_head = False
+        
             for j in tokenList[i]:
                 if(j == ')'):
                     bool_open_pr = False
@@ -273,6 +282,7 @@ if(__name__ == "__main__"):
                     bool_false = True
                     lineErr.append(i+1)
             i += 1
+        
         while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList) or count_bracket >0):
             tmp[len(tmp)-1] += tokenList[i]
             
@@ -293,7 +303,7 @@ if(__name__ == "__main__"):
                     bool_false = True
             i += 1
 
-    #    print('\n',tmp[0],bool_false)
+        #print('\n',tmp[0],bool_false)
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):
