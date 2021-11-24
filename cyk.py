@@ -5,7 +5,10 @@ CNF={}
 LHS = []
 RHS = []
 HEAD = ['for','while','if','def','class']
-
+red_color = "\033[38;2;255;191;201m"
+green_color = "\33[38;2;0;255;128m"
+yellow_color = "\33[38;2;255;245;146m"
+normalizer = "\033[38;2;255;255;255m"
 
 def readCNF(filename):
     with open(filename) as file:
@@ -101,6 +104,10 @@ def cyk(token):
                         if(k[0] == 'S0'):
                             return True
     '''
+def border(n):
+    for i in range(n):
+        print("*",end='')
+    print()
 
 def findElif(i,end,tokenList):
     for k in tokenList[i:end]:
@@ -120,24 +127,29 @@ if(__name__ == "__main__"):
     elif(len(sys.argv) == 2):
         try:
             fileName = sys.argv[1]
+            with open(fileName) as file:
+                file.close()
             readCNF('cnf_out.txt')
         except:
-            print("File tidak ditemukan!")
+            print(red_color,"File tidak ditemukan!",normalizer)
             sys.exit()
         print("Anda tidak menginput CNF, CNF default cnf_out.txt akan digunakan")
     elif(len(sys.argv) == 3):
         try:
             fileName = sys.argv[1]
+            with open(fileName) as file:
+                file.close()
         except:
-            print("File tidak ditemukan!")
+            print(red_color,"File tidak ditemukan!",normalizer)
             sys.exit()
         try:
             readCNF(sys.argv[2])
         except:
-            print("CNF tidak ditemukan!")
+            print(red_color,"CNF tidak ditemukan!",normalizer)
             sys.exit()
     tokenList = []
     lines = []
+    border(30)
     with open(fileName) as file:
         kebenaran = True
         line = file.readline()
@@ -269,7 +281,7 @@ if(__name__ == "__main__"):
                     bool_if = False
             i += 1
 
-        print('\n',tmp[0],bool_false)
+        #print('\n',tmp[0],bool_false)
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):
@@ -280,21 +292,13 @@ if(__name__ == "__main__"):
         else:
             if(len(tmp[0]) >0):
                 for m in lines[sign:i]:
-                    print(m,end='   <-- Ada yang salah')
+                    print(yellow_color,m,normalizer,end='   <-- Ada yang salah di block ini')
                     print()
         sign = i
+    border(30)
     if(len(lineErr)!= 0):
-        print("Terdapat error di line",end=' ')
+        print(red_color,"Terdapat error di line",end=' ')
         for i in range(len(lineErr)):
-            print(lineErr[i], end=' ')
+            print(lineErr[i],normalizer, end=' ')
     else:
-        print("Tidak terdapat kesalahan pada file python.")
-#    file = tokenizeInput('test2.py')
- #   print(file)
-  #  if(cyk(file)):
-   #     print("Syntax valid!")
-    #else:
-     #   print("Syntax tidak valid!")
-      #  for i in file:
-       #     if(i == 'variableError'):
-        #        print("Terdapat kesalahan dalam penamaan variable")
+        print(green_color,"Tidak terdapat kesalahan pada file python.",normalizer)
