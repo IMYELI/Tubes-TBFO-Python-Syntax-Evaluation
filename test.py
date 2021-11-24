@@ -1,1 +1,2 @@
-a = 'c' + str(b)
+def aba():
+return [0 for i in b]

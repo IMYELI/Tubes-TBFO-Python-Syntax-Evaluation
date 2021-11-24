@@ -10,7 +10,7 @@ BOOL_WHILE -> True | False | VAL COMPARE VAL | VAR | INPUT | NUM | FUNCTION | VA
 
 ACTION_LOOP -> ACTION_LOOP ACTION_LOOP | break | continue | ACTION
 DEF -> def VAR ( ) : ACTION | def VAR ( INPUT_DEF ) : ACTION
-RETURN -> return VAL | return True | return False
+RETURN -> return VAL | return True | return False | return LIST | return TUPLE | return DICT | return
 INPUT_DEF -> INPUT_DEF , INPUT_DEF | variable
 
 IF_CONDITION -> if ( VAL ) : ACTION | if ( VAL ) : ACTION ELIF | if VAL : ACTION | if VAL : ACTION ELIF | if ( FUNCTION ) : ACTION | if ( FUNCTION COMPARE FUNCTION ) : ACTION
@@ -39,7 +39,7 @@ ISI_MATRIX -> ISI_MATRIX , ISI_MATRIX | LIST
 
 LIST -> [ ISI_LIST ] | [ ONE_LINE_LIST ] | [ ]
 ISI_LIST -> ISI_LIST , ISI_LIST | NUM | VAR | STRING | INDEXARR | LIST | TUPLE | DICT | VAL
-ONE_LINE_LIST -> VAR for VAR in range ( VAL_LOOP ) | VAL for VAR in range ( VAL_LOOP ) | VAR for VAR in range VAL_LOOP | VAL for VAR in range VAL_LOOP
+ONE_LINE_LIST -> VAR for VAR in range ( VAL_LOOP ) | VAL for VAR in range ( VAL_LOOP ) | VAR for VAR in range VAL_LOOP | VAL for VAR in range VAL_LOOP | VAL for VAL in VAL
 
 TUPLE -> ( ISI_TUPLE ) | ( )
 ISI_TUPLE -> ISI_TUPLE , ISI_TUPLE | NUM | STRING | VAR | INDEXARR | LIST | MATRIX | DICT 
