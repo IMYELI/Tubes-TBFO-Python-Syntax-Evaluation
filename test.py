@@ -1,13 +1,8 @@
-def do_something(x):
-    ''' This is a sample multiline comment
-    '''
-    x + 2 = 3
-    if x == 0 + 1:
-        return 0
-    elif x + 4 == 1:
-        else:
-            return 2
-    elif x == 32:
-        return 4
-    else:
-        return "Doodoo"
+i = 1
+while i <= 10:
+  j = 1
+  while j <= 12:
+        print(i*j)
+        j+=1
+  i+=1
+  print("\n")
