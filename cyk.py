@@ -4,7 +4,7 @@ import sys
 CNF={}
 LHS = []
 RHS = []
-HEAD = ['for','while','if','def','class']
+HEAD = ['for','while','if','def','class','with']
 red_color = "\033[38;2;255;191;201m"
 green_color = "\33[38;2;0;255;128m"
 yellow_color = "\33[38;2;255;245;146m"
@@ -304,7 +304,7 @@ if(__name__ == "__main__"):
                     bool_false = True
             i += 1
 
-        #print('\n',tmp[0],bool_false)
+        print('\n',tmp[0],bool_false)
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):

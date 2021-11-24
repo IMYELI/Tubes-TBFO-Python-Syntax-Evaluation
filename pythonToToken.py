@@ -193,6 +193,15 @@ def tokenizeInput(contents):
             while(i+1<len(result) and result[i] == 'stringggg' and result[i+1-bal] == 'stringggg'):
                 result.pop(i+1)
         i+=1
+    i=0
+    bal = 0
+    while(i<len(result)):
+        if(i+1<len(result)):
+            while(i+1<len(result) and result[i] == 'print' and result[i+1-bal] == 'variable'):
+                result[i] = 'variable'
+                result.pop(i+1)
+
+        i+=1
 
     return result
 
