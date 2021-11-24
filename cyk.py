@@ -310,6 +310,6 @@ if(__name__ == "__main__"):
     if(len(lineErr)!= 0):
         print(red_color,"Terdapat error di line",end=' ')
         for i in range(len(lineErr)):
-            print(lineErr[i],normalizer, end=' ')
+            print(red_color,lineErr[i],normalizer, end=' ')
     else:
         print(green_color,"Tidak terdapat kesalahan pada file python.",normalizer)
