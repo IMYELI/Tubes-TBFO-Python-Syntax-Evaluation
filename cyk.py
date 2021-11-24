@@ -269,7 +269,7 @@ if(__name__ == "__main__"):
                     bool_if = False
             i += 1
 
-        #print('\n',tmp[0],bool_false)
+        print('\n',tmp[0],bool_false)
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):

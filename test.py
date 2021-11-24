@@ -1,2 +1,1 @@
-while(baba() == bobo()):
-    print(b)
+a[0] = { 123 : 'aba'}
