@@ -1,2 +1,2 @@
-for i in range(123456678):
+for i in range(len(b)):
     print(b)
