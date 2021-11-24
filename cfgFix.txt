@@ -50,7 +50,7 @@ DICT_TYPE -> DICT_KEY : NUM | DICT_KEY : STRING
 DICT_KEY -> STRING | NUM
 
 INPUT -> input ( INPUT_VAL ) | TYPE ( INPUT ) | input ( )
-INPUT_VAL -> STRING | VAL | VAL + VAL
+INPUT_VAL -> STRING | VAL | VAL + VAL | VAR | VAR + VAR
 TYPE -> str | int | float | double
 RAISE -> raise FUNCTION
 
