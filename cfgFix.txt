@@ -38,7 +38,7 @@ MATRIX -> [ ISI_MATRIX ]
 ISI_MATRIX -> ISI_MATRIX , ISI_MATRIX | LIST
 
 LIST -> [ ISI_LIST ] | [ ONE_LINE_LIST ]
-ISI_LIST -> ISI_LIST , ISI_LIST | NUM | VAR | STRING | INDEXARR
+ISI_LIST -> ISI_LIST , ISI_LIST | NUM | VAR | STRING | INDEXARR 
 ONE_LINE_LIST -> VAR for VAR in range ( VAL_LOOP ) | VAL for VAR in range ( VAL_LOOP ) | VAR for VAR in range VAL_LOOP | VAL for VAR in range VAL_LOOP
 
 TUPLE -> ( ISI_TUPLE )
@@ -63,4 +63,4 @@ BOOL_OPS -> is | True | False | VAL COMPARE VAL | VAL and VAL | VAL or VAL | VAL
 OPS -> + | - | * | / | %
 COMMENT -> # STRING | " " " STRING " " " | ' ' ' STRING ' ' '
 COMPARE -> eq | neq | < | > | le | ge
-STRING -> ' STRING ' | " STRING " | STRING STRING | stringggg | VAR
+STRING -> ' STRING ' | " STRING " | STRING STRING | stringggg | VAR | STRING + STRING | VAR + STRING | STRING + VAR
