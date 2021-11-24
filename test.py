@@ -1,1 +1,2 @@
-aba(boba(babi))
+while(baba() == bobo()):
+    print(b)

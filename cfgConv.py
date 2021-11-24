@@ -1,5 +1,6 @@
 from os import close
 from copy import deepcopy
+import sys
 
 global cfg
 cfg = {}
@@ -178,34 +179,6 @@ def subMoreThan2():
         idx+=1
     assignNewdict()
   
-            
-
-'''
-    isEpsilonProduced()
-    bal = 0
-    #MENGHAPUS EPSILON PADA CFG
-    for i in range(len(LHS)):
-        if(LHS[i] in EPS):
-            tmpRight = []
-            right = cnf(LHS[i-bal])
-            for j in right:
-                tmp = []
-                for k in j:
-                    if k in EPS:
-                        tmp = deepcopy(j)
-                        tmp.remove(k)
-                        tmpRight.append(tmp)
-
-def isEpsilonProduced():        #MENCARI NON TERMINAL YANG MENGHASILKAN EPSILON
-    for i in range(len(LHS)):
-        right = cnf[LHS[i]]
-        for j in right:
-            if("'e" in j):
-                EPS.append(LHS[i])
-                break
-
-    return
-'''
 def isExistInRHS(right):
     for i in RHS:
         if (len(i) == 1 and right in i):
@@ -321,3 +294,17 @@ def printCNF():
                 write += "|"
         write += "\n"
     print(write)
+
+if(__name__ == '__main__'):
+    if(len(sys.argv)>1):
+        try:
+            readCFG(sys.argv[1])
+        except:
+            print("File Tidak ditemukan!")
+            sys.exit()
+    STARTSTATE()
+    uselessRemovalSTATE()
+    eliminateTerminal()
+    subMoreThan2()
+    writeToFile()
+    print("CFG telah berhasil diconvert ke CNF!")

@@ -3,7 +3,8 @@ from pythonToToken import tokenizeInput
 CNF={}
 LHS = []
 RHS = []
-HEAD = ['for','while','if','def']
+HEAD = ['for','while','if','def','class']
+
 
 def readCNF(filename):
     with open(filename) as file:
@@ -83,11 +84,11 @@ def cyk(token):
                 arr[i][j] = [searchVar(tmp4)]
                 if(arr[i][j] == [0]):
                     arr[i][j] = 0
-         #       print('\n',tmp4,i,j,'\n\n')
+        #        print('\n',tmp4,i,j,'\n\n')
         #        printCNF(arr)
         #print(arr)
         level += 1
-    if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and len(arr[panjang-1][0][0]) >= 1 )):
+    if((arr[panjang-1][0] != 0 and arr[panjang-1][0][0] != 0 and arr[panjang-1][0][0][0]) == 'S0' ):
         return True
     return False
     '''
@@ -100,42 +101,170 @@ def cyk(token):
                             return True
     '''
 
+def findElif(i,end,tokenList):
+    for k in tokenList[i:end]:
+        for l in k:
+            if(l == "elif"):
+                return True
+            elif(l in HEAD and l != 'if'):
+                return False
+    return False
+
+
 if(__name__ == "__main__"):
     readCNF('cnf_out.txt')
-    with open('tubay3.py') as file:
+    tokenList = []
+    lines = []
+    with open('test.py') as file:
         kebenaran = True
         line = file.readline()
         while(line != ''):
             tmp = []
             token = tokenizeInput(line)
+            tokenList.append(token)
             line = line.replace("\n",'')
+            lines.append(line)
             tmp.append(line)
-            if(token != []):
-                if(token[0] in HEAD):
-                    line = file.readline()
-                    token += tokenizeInput(line)
-                    line = line.replace("\n",'')
-                    tmp.append(line)
-                elif(len(token)>2):
-                    if(token[2] =="{" ):
-                        while(token[len(token)-1] != '}'):
-                            line = file.readline()
-                            line = line.replace("\n",'')
-                            tmp.append(line)
-                            token += tokenizeInput(line)
-                print(token)
-                if(line != ''):
-                    kebenaran = cyk(token)
-                if(kebenaran and line != ''):
-                    for i in tmp:
-                        print(i)
-                else:
-                    if(line != ''):
-                        for i in tmp:
-                            print(i,end='   <-- Ada yang salah')
-                            print()
             line = file.readline()
+    i = 0
+    sign = 0
+    bool_open_pr = False
+    bool_open_dc = False
+    bool_if = False
+    bool_head = False
+    bool_list = False
+    count_bracket = 0
+    count_single = 0
+    count_quote = 0
+    bool_multi_comment = False
+    lineErr = []
+    while(i<len(tokenList)):
+        bool_false = False
+        tmp = []
+        tmp.append(tokenList[i])
+        for j in tokenList[i]:
+            if j == '(':
+                bool_open_pr = True
+            elif(j == ')'):
+                bool_open_pr = False
+            elif j == '{':
+                bool_open_dc = True
+            elif(j == '}'):
+                bool_open_dc = False
+            elif(j=="["):
+                bool_list = True
+                count_bracket += 1
+            elif(j=="]"):
+                bool_list = False
+                count_bracket -= 1
+            elif(j == "if"):
+                bool_if = True
+            if(j in HEAD and j != 'if'):
+                bool_if = False
+            if(not bool_if and (j == 'elif' or j == 'else')):
+                bool_false = True
+                lineErr.append(i+1)
+            if(j in HEAD or j == "elif" or j == "else"):
+                bool_head = True
+            if(j == "'" and bool_multi_comment):
+                count_single -= 1
+            elif(j == '"' and bool_multi_comment):
+                count_quote -= 1
+            elif(j == "'" and not bool_multi_comment):
+                count_single += 1
+            elif(j == '"' and not bool_multi_comment):
+                count_quote += 1
+            if(count_single == 3):
+                bool_multi_comment = True
+            elif(count_quote == 3):
+                bool_multi_comment = True
+            elif(count_quote == 0):
+                bool_multi_comment = False
+            elif(count_single == 0):
+                bool_multi_comment = False
+            if(bool_multi_comment):
+                bool_head = True
+        i += 1
+        if(bool_head and i==len(tokenList)):
+            bool_false = True
+            lineErr.append(i+1)
+        while(bool_head and i<len(tokenList) and (not bool_false)):
+            tmp[len(tmp)-1] += tokenList[i]
+            bool_head = False
+            for j in tokenList[i]:
+                if(j == ')'):
+                    bool_open_pr = False
+                elif(j == '}'):
+                    bool_open_pr = False
+                elif(j=="["):
+                    bool_list = True
+                    count_bracket += 1
+                elif(j == "if"):
+                    bool_if = True
+                elif(j==']'):
+                    bool_list = False
+                    count_bracket -= 1
+                if(j in HEAD or j == "elif" or j == "else"):
+                    bool_head = True
+                if(not bool_if and (j == 'elif' or j == 'else')):
+                    bool_false = True
+                    lineErr.append(i+1)
+                if(j == "'" and bool_multi_comment):
+                    count_single -= 1
+                elif(j == '"' and bool_multi_comment):
+                    count_quote -= 1
+                elif(j == "'" and not bool_multi_comment):
+                    count_single += 1
+                elif(j == '"' and not bool_multi_comment):
+                    count_quote += 1
+                if(count_single == 3):
+                    bool_multi_comment = True
+                elif(count_quote == 3):
+                    bool_multi_comment = True
+                elif(count_quote == 0):
+                    bool_multi_comment = False
+                elif(count_single == 0):
+                    bool_multi_comment = False
+                if(bool_multi_comment):
+                    bool_head = True
+            i += 1
+        while(not bool_false and (bool_open_pr or bool_open_dc) and i<len(tokenList) or count_bracket >0):
+            tmp[len(tmp)-1] += tokenList[i]
+            
+            for j in tokenList[i]:
+                if(j == ')'):
+                    bool_open_pr = False
+                elif(j == '}'):
+                    bool_open_pr = False
+                elif(j==']'):
+                    bool_list = False
+                    count_bracket -= 1
+                elif(j=="["):
+                    bool_list = True
+                    count_bracket += 1
+                if(j in HEAD and j != 'if'):
+                    bool_if = False
+            i += 1
 
+        #print('\n',tmp[0],bool_false)
+        
+        if(len(tmp[0]) > 0 and not bool_false ):
+            kebenaran = cyk(tmp[0])
+            if(kebenaran == False):
+                lineErr.append(i)
+        if(kebenaran and len(tmp[0]) >0 and not bool_false):
+            for m in lines[sign:i]:
+                print(m)
+        else:
+            if(len(tmp[0]) >0):
+                for m in lines[sign:i]:
+                    print(m,end='   <-- Ada yang salah')
+                    print()
+        sign = i
+    if(len(lineErr)!= 0):
+        print("Terdapat error di line",end=' ')
+        for i in range(len(lineErr)):
+            print(lineErr[i], end=' ')
 #    file = tokenizeInput('test2.py')
  #   print(file)
   #  if(cyk(file)):

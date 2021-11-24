@@ -27,6 +27,10 @@ def tokenizeInput(contents):
     bool_detect_int = False
     bool_dot = False
     bool_num = False
+    bool_dont = False
+    bool_dont_in = False
+    bool_dont_is = False
+    bool_dont_int = False
     for char in result:
         if(char != ' '): 
             lex+= char
@@ -56,23 +60,48 @@ def tokenizeInput(contents):
                 res.append(lex)
                 lex = ''
             if(bool_detect_one and (result[i+1] =='\n')):
-                lex = 'string'
+                lex = 'stringggg'
                 bool_detect_one = False
             if(i+3<len(result)):
                 if(lex == 'in' and result[i+1] == 'p' and result[i+2] == 'u' and result[i+3] == 't'):
                     bool_detect_input = True
             if(bool_detect_input and lex == 'input'):
                 bool_detect_input = False
-            if(lex == 'in' and result[i+1] == 't'):
+            if(i+2<len(result)):
+                if(lex == 'in' and result[i+1] == 't' and (result[i+2] == '' or result[i+2] == ' ' or result[i+2] == '[' or result[i+2] == '(' or result[i+2] != '{')):
                     bool_detect_int = True
-            if(bool_detect_int and lex == 'int'):
+                '''elif(lex == 'i' and result[i+1] == 'n' and (result[i+2] == '' or result[i+2] == ' ' or result[i+2] == '[' or result[i+2] == '(' or result[i+2] != '{')):
+                    bool_dont_in = True
+                elif(lex == 'st' and result[i+1] == 'r' and (result[i+2] == '' or result[i+2] == ' ' or result[i+2] == '[' or result[i+2] == '(' or result[i+2] != '{')):
+                    bool_dont = True
+                elif(lex == 'i' and result[i+1] == 's' and (result[i+2] == '' or result[i+2] == ' ' or result[i+2] == '[' or result[i+2] == '(' or result[i+2] != '{')):
+                    bool_dont_is = True'''
+            if(bool_detect_int and lex == 'int' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
                 bool_detect_int = False
+            '''elif(bool_dont_in and lex == 'in' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
+                bool_dont_in = False
+            elif(bool_dont and lex == 'str' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
+                bool_dont = False
+            elif(bool_dont_is and lex == 'is' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
+                bool_dont_is = False'''
             if(result[i]=='.'):
                 lex = lex[0:(len(lex)-2)]
                 bool_dot = True
             if(bool_dot and result[i] != '.'):
                 bool_dot = False
-            if(not (bool_num or bool_dot or bool_detect_int or bool_detect_input or bool_detect_one or bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
+            if(lex == 'str' + char for char in alphabets):
+                bool_dont = False
+            if(lex == 'str' and (result[i+1] != '' and result[i+1] != ' ') and result[i+1] != '['and result[i+1] != '(' and result[i+1] != '{'):
+                bool_dont = True
+            if(lex == 'in' + char for char in alphabets):
+                bool_dont_in = False
+            if(lex == 'in' and (result[i+1] != '' and result[i+1] != ' ') and result[i+1] != '[' and result[i+1] != '(' and result[i+1] != '{'):
+                bool_dont_in = True
+            if(lex == 'is' + char for char in alphabets):
+                bool_dont_is = False
+            if(lex == 'is' and (result[i+1] != '' and result[i+1] != ' ') and result[i+1] != '[' and result[i+1] != '(' and result[i+1] != '{'):
+                bool_dont_is = True
+            if(not (bool_dont_int or bool_dont_is or bool_dont_in or bool_dont or bool_num or bool_dot or bool_detect_int or bool_detect_input or bool_detect_one or bool_detect_div or bool_detect_pow or bool_detect_eq or bool_detect_double) and (result[i+1] == ' ' or result[i+1] in shouldNotBeTokenized or lex in shouldNotBeTokenized)):
                 if lex != '':
                     if(lex != '\n'):
                         res.append(lex)
@@ -119,9 +148,9 @@ def tokenizeInput(contents):
             count_str -= 1
             bool_conv = True
         if(bool_string and not bool_conv):
-            splitword = 'string'
+            splitword = 'stringggg'
             bool_conv = True
-        if(splitword=='string'):
+        if(splitword=='stringggg'):
             bool_conv = True
         '''
         if(splitword == "(" and not bool_conv):
