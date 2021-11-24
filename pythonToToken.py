@@ -31,6 +31,7 @@ def tokenizeInput(contents):
     bool_dont_in = False
     bool_dont_is = False
     bool_dont_int = False
+    bool_keep_string = False
     for char in result:
         if(char != ' '): 
             lex+= char
@@ -183,7 +184,13 @@ def tokenizeInput(contents):
     result = temporaryResult
     # Strip empty string
     result = [string for string in result if string!='']
-
+    i = 0
+    bal = 0
+    while(i<len(result)):
+        if(i+1<len(result)):
+            while(i+1<len(result) and result[i] == 'stringggg' and result[i+1-bal] == 'stringggg'):
+                result.pop(i+1)
+        i+=1
     return result
 
 def isNumber(char):

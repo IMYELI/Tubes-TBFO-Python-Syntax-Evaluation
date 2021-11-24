@@ -1,4 +1,5 @@
 from pythonToToken import tokenizeInput
+import sys
 
 CNF={}
 LHS = []
@@ -112,10 +113,32 @@ def findElif(i,end,tokenList):
 
 
 if(__name__ == "__main__"):
-    readCNF('cnf_out.txt')
+    if(len(sys.argv) == 1):
+        readCNF('cnf_out.txt')
+        fileName = 'test.py'
+        print("Anda tidak menginput nama file, Pembacaan dilakukan pada file test.py menggunakan file cnf_out.txt.")
+    elif(len(sys.argv) == 2):
+        try:
+            fileName = sys.argv[1]
+            readCNF('cnf_out.txt')
+        except:
+            print("File tidak ditemukan!")
+            sys.exit()
+        print("Anda tidak menginput CNF, CNF default cnf_out.txt akan digunakan")
+    elif(len(sys.argv) == 3):
+        try:
+            fileName = sys.argv[1]
+        except:
+            print("File tidak ditemukan!")
+            sys.exit()
+        try:
+            readCNF(sys.argv[2])
+        except:
+            print("CNF tidak ditemukan!")
+            sys.exit()
     tokenList = []
     lines = []
-    with open('test.py') as file:
+    with open(fileName) as file:
         kebenaran = True
         line = file.readline()
         while(line != ''):
@@ -247,7 +270,6 @@ if(__name__ == "__main__"):
             i += 1
 
         #print('\n',tmp[0],bool_false)
-        
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):
@@ -265,6 +287,8 @@ if(__name__ == "__main__"):
         print("Terdapat error di line",end=' ')
         for i in range(len(lineErr)):
             print(lineErr[i], end=' ')
+    else:
+        print("Tidak terdapat kesalahan pada file python.")
 #    file = tokenizeInput('test2.py')
  #   print(file)
   #  if(cyk(file)):
