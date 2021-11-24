@@ -1,1 +1,1 @@
-a = b
+raise("ABS")
