@@ -1,2 +1,1 @@
-def aba():
-return [0 for i in b]
+section = length // 4
