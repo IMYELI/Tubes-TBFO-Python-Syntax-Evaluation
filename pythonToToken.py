@@ -56,6 +56,7 @@ def tokenizeInput(contents):
                 bool_detect_div = False
             elif(bool_detect_eq and result[i+1] !="=" ):
                 bool_detect_eq = False
+            
             if(lex == '#'):
                 bool_detect_one = True
                 res.append(lex)
@@ -86,7 +87,7 @@ def tokenizeInput(contents):
             elif(bool_dont_is and lex == 'is' and (result[i+1] == '' or result[i+1] == ' ' or result[i+1] == '[' or result[i+1] == '(' or result[i+1] != '{')):
                 bool_dont_is = False'''
             if(result[i]=='.'):
-                lex = lex[0:(len(lex)-2)]
+                lex = lex[0:(len(lex)-1)]
                 bool_dot = True
             if(bool_dot and result[i] != '.'):
                 bool_dot = False
@@ -106,6 +107,7 @@ def tokenizeInput(contents):
                 if lex != '':
                     if(lex != '\n'):
                         res.append(lex)
+                        
                     lex = ''
         i += 1
     if(lex != '\n' and lex != ' '):

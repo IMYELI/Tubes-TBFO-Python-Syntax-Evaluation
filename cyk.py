@@ -231,7 +231,8 @@ if(__name__ == "__main__"):
             lineErr.append(i+1)
         while(bool_head and i<len(tokenList) and (not bool_false)):
             tmp[len(tmp)-1] += tokenList[i]
-            bool_head = False
+            if(tokenList[i] != []):
+                bool_head = False
             for j in tokenList[i]:
                 if(j == ')'):
                     bool_open_pr = False
@@ -292,7 +293,7 @@ if(__name__ == "__main__"):
                     bool_false = True
             i += 1
 
-        #print('\n',tmp[0],bool_false)
+        print('\n',tmp[0],bool_false)
         if(len(tmp[0]) > 0 and not bool_false ):
             kebenaran = cyk(tmp[0])
             if(kebenaran == False):
